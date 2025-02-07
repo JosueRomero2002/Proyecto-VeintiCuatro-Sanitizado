@@ -1,0 +1,27 @@
+# fields=['Estado']
+
+
+# # Get current time
+# now = datetime.now()
+# current_hour = int(now.strftime("%H"))
+# current_minute = int(now.strftime("%M"))
+
+# # Adjust time if necessary
+# if current_hour == 24:
+#     current_hour = 0
+#     current_minute = int(now.strftime("%M")) + 1
+
+# if current_minute == 60:
+#     current_minute = 0
+
+# # Set the target phone number and message
+# phone_number = "+50487794832"
+# message = "mensaje"
+
+# # Specify the time to send the message (15:00 in this example)
+# scheduled_time = now + timedelta(seconds=20)
+
+# # Send the WhatsApp message
+# pywhatkit.sendwhatmsg(phone_number, message, scheduled_time.hour, scheduled_time.minute, 15, True, 4)
+
+# print(datetime.now())
