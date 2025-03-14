@@ -1,4 +1,7 @@
-ejecutar desde main
+## Instalación
+Para instalar las dependencias del proyecto, usa el siguiente comando:
+
+pip install -r requirements.txt
 
 
 comandos: 
