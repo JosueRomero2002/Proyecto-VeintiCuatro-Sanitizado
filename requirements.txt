@@ -1,0 +1,10 @@
+openai
+pydub
+sounddevice
+soundfile
+keyboard
+threading
+subprocess
+shareplum
+pywhatkit
+dotenv
