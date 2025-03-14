@@ -1,5 +1,4 @@
 import time
-import os
 import threading
 import speech_recognition as sr
 import subprocess
@@ -9,6 +8,17 @@ from shareplum import Site
 from shareplum import Office365
 from shareplum.site import Version
 from APIs.autoGPT import AutoGPT  # Importamos la clase AutoGPT desde el archivo que contenga esta clase
+
+
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  
+
+userSh = os.getenv('SHAREPOINT_USER')
+passSh = os.getenv('SHAREPOINT_PASS')
+
+
 
 # Inicializamos Toastify, reconocimiento de voz y la clase AutoGPT
 ToastifyWindows = ToastifyWindows()
@@ -38,7 +48,7 @@ execution_lock = threading.Lock()  # Lock para controlar la ejecución simultán
 
 # Función para obtener los datos de la lista de SharePoint
 def obtener_datos_lista():
-    authcookie = Office365('https://unitechn.sharepoint.com', username='', password='').GetCookies()
+    authcookie = Office365('https://unitechn.sharepoint.com', username= userSh, password= passSh).GetCookies()
     site = Site('https://unitechn.sharepoint.com/sites/TutoriasUNITEC2/', authcookie=authcookie)
     lista = site.List('Tutorias')  # Nombre de la lista en SharePoint
     return lista.GetListItems(fields=['ID', 'Aula', 'Tipo de Tutoria', 'Contactado','Estado', 'Telefono', 'Nombre Tutor', 'Fecha de Tutoria', 'Hora Tutoria', 'Clases','Temas','Alumnos', 'TutoresRechazaron'])

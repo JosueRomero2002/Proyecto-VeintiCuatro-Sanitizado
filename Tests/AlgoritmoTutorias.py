@@ -8,8 +8,17 @@ from shareplum import Office365
 import random
 import difflib
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  
+
+userSh = os.getenv('SHAREPOINT_USER')
+passSh = os.getenv('SHAREPOINT_PASS')
+
+
 # Autenticación en SharePoint
-authcookie = Office365('https://unitechn.sharepoint.com', username='', password='').GetCookies()
+authcookie = Office365('https://unitechn.sharepoint.com', username=userSh, password=passSh).GetCookies()
 
 site = Site('https://unitechn.sharepoint.com/sites/TutoriasUNITEC2/', authcookie=authcookie)
 

@@ -3,11 +3,18 @@ from datetime import datetime, timedelta
 import time
 import pyautogui
 import keyboard as k
-
+import os
+from dotenv import load_dotenv 
 from shareplum import Site
 from shareplum import Office365
 
-authcookie = Office365('https://unitechn.sharepoint.com', username='', password='').GetCookies()
+load_dotenv()  
+
+userSh = os.getenv('SHAREPOINT_USER')
+passSh = os.getenv('SHAREPOINT_PASS')
+
+
+authcookie = Office365('https://unitechn.sharepoint.com', username=userSh, password=passSh).GetCookies()
 site = Site('https://unitechn.sharepoint.com/sites/TutoriasUNITEC2/', authcookie=authcookie)
 sp_list_Tutorias = site.List('Tutorias')
 sp_list_Tutores = site.List('Tutores')
