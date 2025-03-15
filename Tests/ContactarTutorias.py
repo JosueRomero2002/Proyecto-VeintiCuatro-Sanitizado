@@ -48,13 +48,20 @@ print(Tutoresdata)
 
 print(len(Tutoriasdata))
 
+
+
+
+
+
+
 ContactarPendientes = True
 ContactarCoordinadas = True
 ContactarRechazadas = False
-ContactarReagendadas = True
+ContactarReagendadas = False
+ContactarCanceladas = False
 
 ContactarModeradorAula = False
-ContactarModeradorTutor = False
+ContactarModeradorTutor = True #contactar sin tutor
 
 
 
@@ -747,15 +754,15 @@ if (ContactarModeradorTutor):
 
            TelefonoTutor = ""
            TelefonoAlumno = ""
-           for j in range (0,len(Tutoresdata)):
+          #  for j in range (0,len(Tutoresdata)):
                 
-                if Tutoresdata[j]['Tutor'] == FilteredTutoriasdata[i]['Nombre Tutor']:
+          #       if Tutoresdata[j]['Tutor'] == FilteredTutoriasdata[i]['Nombre Tutor']:
                    
-                   try:
-                    TelefonoTutor = Tutoresdata[j]['Telefono']
-                    TelefonoAlumno = FilteredTutoriasdata[i]['Telefono']
-                   except:
-                     TelefonoTutor = "87794832"
+          #          try:
+          #           TelefonoTutor = Tutoresdata[j]['Telefono']
+           TelefonoAlumno = FilteredTutoriasdata[i]['Telefono']
+          #          except:
+          #            TelefonoTutor = "87794832"
            numAux = "+504"+TelefonoAlumno
     
 
@@ -779,8 +786,84 @@ if (ContactarModeradorTutor):
           #  pywhatkit.sendwhatmsg_instantly("+50489886363", mensaje, 25, False, 4)
           #  update_data = [{'ID': FilteredTutoriasdata[i]['ID'], 'Contactado': 'Yes'}]
           #  sp_list_Tutorias.UpdateListItems(data=update_data, kind='Update')
+           mensaje = "🐯Tutorias Unitec🐯 \n📕📕📕📕📕📕📕📕📕📕📕📕📕📕"
+           mensaje += "\n\nEsperamos que estés bien. Queríamos informarte que, lamentablemente, *no pudimos coordinar tu solicitud de tutoría porque no había disponibilidad para ese día u horario 📅.* Esto sucede debido a la alta demanda de tutorías."
+           mensaje += "\n\n➡️ Modalidad : "+FilteredTutoriasdata[i]['Tipo de Tutoria']
+           mensaje += "\n➡️ Fecha: "+FilteredTutoriasdata[i]['Fecha de Tutoria'].strftime("%Y-%m-%d %H:%M:%S")
+           mensaje += "\n➡️ Día: " + FilteredTutoriasdata[i]['Fecha de Tutoria'].strftime("%A").upper()
+           mensaje += "\n➡️ Hora: "+FilteredTutoriasdata[i]['Hora Tutoria']
+           mensaje += "\n➡️ Asignatura: "+FilteredTutoriasdata[i]['Clases']
+           mensaje += "\n➡️ Alumno: "+FilteredTutoriasdata[i]['Alumnos']
+           mensaje += "\n➡️ Contacto: "+TelefonoAlumno
+           mensaje += "\n➡️ Tema: "+FilteredTutoriasdata[i]['Temas']
+        
+           mensaje += "\n\nTe sugerimos intentar solicitar nuevamente 🔄 y revisar el catálogo de tutores en @tutorias_unitecsps en Instagram 📲, donde puedes ver la oferta disponible. ¡Esperamos poder ayudarte pronto! ✨"
+          #  mensaje += "\nPrefiere ya no recibir la tutoria => 👎"
+
+           
+           mensaje += "\nTambien puedes responder a este mensaje con que otro horario en otro dia podrias recibir la tutoria"
+
+          #  mensaje += "\n\n(Si confirmas por medio de este mensaje, no es necesario que respondas el correo)"
+           mensaje += "\n\nBeta Version 1.0\n📕📕📕📕📕📕📕📕📕📕📕📕📕📕"
+           #pywhatkit.sendwhatmsg(numAux,mensaje,current_hour,current_minute,40,True,50)
+           pyautogui.click(800, 450)
+           time.sleep(2)
+           k.press_and_release('enter')
+           time.sleep(2)
+           pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 25, False, 4)
+           update_data = [{'ID': FilteredTutoriasdata[i]['ID'], 'Contactado': 'Yes' , 'Estado': 'No se impartio'}]
+           sp_list_Tutorias.UpdateListItems(data=update_data, kind='Update')
+
+         #   pyautogui.click(1050, 950)
+           
+         #   time.sleep(2)
+         #   k.press_and_release('enter')
+        #   excel_data_df.loc[i,['Encuesta']] = "Aplicada"
+           
+pyautogui.click(800, 450)
+time.sleep(2)
+k.press_and_release('enter')
+time.sleep(2)
+
+
+
+
+
+if (ContactarCanceladas): 
+
+  for i in range (0,size):
+   now = datetime.now()
+   if (FilteredTutoriasdata[i]['Estado'] == "Cancelada") and FilteredTutoriasdata[i]['Contactado'] == "No" and FilteredTutoriasdata[i]['Fecha de Tutoria'] < now:
+           current_hour = int(now.strftime("%H"))
+           if current_hour == 24:
+               
+               
+               current_hour = 0
+               
+           current_minute = int(now.strftime("%M")) + 1
+
+           if current_minute == 60:
+               current_minute = 0
+
+
+           TelefonoTutor = ""
+           TelefonoAlumno = ""
+           for j in range (0,len(Tutoresdata)):
+                
+                if Tutoresdata[j]['Tutor'] == FilteredTutoriasdata[i]['Nombre Tutor']:
+                   
+                   try:
+                    TelefonoTutor = Tutoresdata[j]['Telefono']
+                    TelefonoAlumno = FilteredTutoriasdata[i]['Telefono']
+                   except:
+                     TelefonoTutor = "87794832"
+           numAux = "+504"+TelefonoAlumno
+    
+
+           print("Mensaje enviado a: ",numAux)
+
            mensaje = "🐯Tutorias Unitec🐯"
-           mensaje += "\n\nSaludos de Tutorias Unitec, espero que se encuentre bien. Le escribo por la tutoria que habia solicitado, la cual no pudimos agendar con un tutor a tiempo por falta de disponibilidad. Si desea reagendar o cancelar la tutoria, por favor responder a este mensaje."
+           mensaje += "\n\nSaludos de Tutorias Unitec, espero que se encuentre bien. Le escribo por la tutoria que habia solicitado, ."
            mensaje += "\n\n➡️ Modalidad : "+FilteredTutoriasdata[i]['Tipo de Tutoria']
            mensaje += "\n➡️ Fecha: "+FilteredTutoriasdata[i]['Fecha de Tutoria'].strftime("%Y-%m-%d %H:%M:%S")
            mensaje += "\n➡️ Día: " + FilteredTutoriasdata[i]['Fecha de Tutoria'].strftime("%A").upper()
@@ -793,7 +876,6 @@ if (ContactarModeradorTutor):
            mensaje += "\n\nDesea reagendar para esta semana => 👍"
            mensaje += "\nPrefiere ya no recibir la tutoria => 👎"
 
-           
            mensaje += "\nTambien puedes responder a este mensaje con que otro horario en otro dia podrias recibir la tutoria"
 
           #  mensaje += "\n\n(Si confirmas por medio de este mensaje, no es necesario que respondas el correo)"
