@@ -17,6 +17,8 @@ passSh = os.getenv('SHAREPOINT_PASS')
 authcookie = Office365('https://unitechn.sharepoint.com', username=userSh, password=passSh).GetCookies()
 site = Site('https://unitechn.sharepoint.com/sites/TutoriasUNITEC2/', authcookie=authcookie)
 sp_list_Tutorias = site.List('Tutorias')
+
+
 sp_list_Tutores = site.List('Tutores')
 sp_list_Aulas = site.List('Aulas')
 Tutoriasdata = sp_list_Tutorias.GetListItems(fields=['ID', "Aula", 'Tipo de Tutoria', 'Contactado','Estado', 'Telefono', 'Nombre Tutor', 'Tipo de Tutoria', 'Fecha de Tutoria', 'Hora Tutoria', 'Clases','Temas','Alumnos', 'Aula', 'Numero de Cuenta'])
@@ -203,7 +205,7 @@ if (ContactarPendientes):
 
            time.sleep(2)
 
-           pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 25, False, 4)
+           pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 25, True, 4)
            update_data = [{'ID': FilteredTutoriasdata[i]['ID'], 'Contactado': 'Yes'}]
            sp_list_Tutorias.UpdateListItems(data=update_data, kind='Update')
 
