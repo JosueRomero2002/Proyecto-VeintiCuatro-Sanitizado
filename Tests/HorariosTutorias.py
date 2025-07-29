@@ -7,9 +7,17 @@ from shareplum import Site
 from shareplum import Office365
 import random
 import difflib
+import pandas
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  
+
+userSh = os.getenv('SHAREPOINT_USER')
+passSh = os.getenv('SHAREPOINT_PASS')
 
 # Autenticación en SharePoint
-authcookie = Office365('https://unitechn.sharepoint.com', username='', password='').GetCookies()
+authcookie = Office365('https://unitechn.sharepoint.com', username=userSh, password=passSh).GetCookies()
 
 site = Site('https://unitechn.sharepoint.com/sites/TutoriasUNITEC2/', authcookie=authcookie)
 
@@ -575,34 +583,54 @@ def crearTutoresConRangosHorarios(DatosTutores):
 
 
 
+#Plantilla
+DatosTutoresPayload = {
+    'Tutor': 'FERNANDO JOSUÉ PORTILLO PEÑA',
+    'Habilitado/Deshabilitado': 'Yes',
+    'Email': '',
+    'Telefono': '',
+    'Clases': 'Algebra',
+    'Horario Lunes': '1:20 pm - 2:40 pm',
+    'Horario Martes': '1:20 pm - 2:40 pm',
+    'Horario Miercoles': '1:20 pm - 2:40 pm',
+    'Horario Jueves': '1:20 pm - 2:40 pm',
+    'Horarios Viernes': '9:55 am - 11:15 am, 1:20 pm - 2:40 pm',
+    'Horario Sabado': '',
+    'Horarios Virtuales Lunes': '',
+    'Horarios Virtuales Martes': '',
+    'Horarios Virtuales Miercoles': '',
+    'Horarios Virtuales Jueves': '',
+    'Horarios Virtuales Viernes': '',
+    'Horarios Virtuales Sabado': ''
+}
 
-DatosTutoresPayload = [ 
- {'Tutor': 'FERNANDO JOSUÉ PORTILLO PEÑA',
-  'Habilitado/Deshabilitado': 'Yes',
-  'Email': '',
-  'Telefono': '',
-  'Clases': 'Algebra',
-  'Horario Lunes': '1:20 pm - 2:40 pm',
-  'Horario Martes': '1:20 pm - 2:40 pm',
-  'Horario Miercoles': '1:20 pm - 2:40 pm',
-  'Horario Jueves': '1:20 pm - 2:40 pm',
-  'Horarios Viernes': '9:55 am - 11:15 am, 1:20 pm - 2:40 pm',
-  'Horario Sabado': '',
-  'Horarios Virtuales Lunes': '',
-  'Horarios Virtuales Martes': '',
-  'Horarios Virtuales Miercoles': '',
-  'Horarios Virtuales Jueves': '',
-  'Horarios Virtuales Viernes': '',
-  'Horarios Virtuales Sabado': ''},
-
-  
 
 
- 
+name = input("Ingrese el nombre del archivo de Excel (ejemplo: 'Tutorias Q1 2023'): ")
+hoja = input("Ingrese el nombre de la hoja de Excel (ejemplo: 'Tutores'): ")
+excel_data_df = pandas.read_excel(name + '.xlsx', sheet_name=hoja)
 
-]
+tutores = {
+    'Tutor': excel_data_df.Tutor,
+    'Habilitado/Deshabilitado': excel_data_df['Habilitado/Deshabilitado'],
+    'Email': excel_data_df.Email,
+    'Telefono': excel_data_df.Telefono,
+    'Clases': excel_data_df.Clases,
+    'Horario Lunes': excel_data_df.Lunes,
+    'Horario Martes': excel_data_df.Martes,
+    'Horario Miercoles': excel_data_df.Miercoles,
+    'Horario Jueves': excel_data_df.Jueves,
+    'Horarios Viernes': excel_data_df.Viernes,
+    'Horario Sabado': excel_data_df.Sabado,
+    'Horarios Virtuales Lunes': excel_data_df['Horarios Virtuales Lunes'],
+    'Horarios Virtuales Martes': excel_data_df['Horarios Virtuales Martes'],
+    'Horarios Virtuales Miercoles': excel_data_df['Horarios Virtuales Miercoles'],
+    'Horarios Virtuales Jueves': excel_data_df['Horarios Virtuales Jueves'],
+    'Horarios Virtuales Viernes': excel_data_df['Horarios Virtuales Viernes'],
+    'Horarios Virtuales Sabado': excel_data_df['Horarios Virtuales Sabado']
+}
 
-crearTutoresConRangosHorarios(DatosTutoresPayload)
+# crearTutoresConRangosHorarios(DatosTutoresPayload)
 
 
 # ==================================================================================================
