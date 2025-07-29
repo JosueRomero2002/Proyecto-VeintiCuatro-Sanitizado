@@ -8,3 +8,4 @@ subprocess
 shareplum
 pywhatkit
 dotenv
+pandas

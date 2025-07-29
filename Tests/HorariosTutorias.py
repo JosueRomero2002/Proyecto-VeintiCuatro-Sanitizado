@@ -1,3 +1,4 @@
+import re
 import pywhatkit
 from datetime import datetime, timedelta
 import time
@@ -604,17 +605,22 @@ DatosTutoresPayload = {
     'Horarios Virtuales Sabado': ''
 }
 
-
+def parseWhatsappNumber(message):
+    pattern = r'https://wa\.me/(\d+)\?text=(.*)'
+    match = re.search(pattern, message)
+    if match:
+        number = match.group(1)
+        return number
 
 name = input("Ingrese el nombre del archivo de Excel (ejemplo: 'Tutorias Q1 2023'): ")
 hoja = input("Ingrese el nombre de la hoja de Excel (ejemplo: 'Tutores'): ")
 excel_data_df = pandas.read_excel(name + '.xlsx', sheet_name=hoja)
 
-tutores = {
-    'Tutor': excel_data_df.Tutor,
+structure = {
+    'Tutor': excel_data_df.Nombre,
     'Habilitado/Deshabilitado': excel_data_df['Habilitado/Deshabilitado'],
-    'Email': excel_data_df.Email,
-    'Telefono': excel_data_df.Telefono,
+    'Email': len(excel_data_df.Nombre)*" ",
+    'Telefono': excel_data_df['Enlace Whatsapp'],
     'Clases': excel_data_df.Clases,
     'Horario Lunes': excel_data_df.Lunes,
     'Horario Martes': excel_data_df.Martes,
@@ -622,15 +628,39 @@ tutores = {
     'Horario Jueves': excel_data_df.Jueves,
     'Horarios Viernes': excel_data_df.Viernes,
     'Horario Sabado': excel_data_df.Sabado,
-    'Horarios Virtuales Lunes': excel_data_df['Horarios Virtuales Lunes'],
-    'Horarios Virtuales Martes': excel_data_df['Horarios Virtuales Martes'],
-    'Horarios Virtuales Miercoles': excel_data_df['Horarios Virtuales Miercoles'],
-    'Horarios Virtuales Jueves': excel_data_df['Horarios Virtuales Jueves'],
-    'Horarios Virtuales Viernes': excel_data_df['Horarios Virtuales Viernes'],
-    'Horarios Virtuales Sabado': excel_data_df['Horarios Virtuales Sabado']
+    'Horarios Virtuales Lunes': len(excel_data_df.Nombre)*" ",
+    'Horarios Virtuales Martes': len(excel_data_df.Nombre)*" ",
+    'Horarios Virtuales Miercoles': len(excel_data_df.Nombre)*" ",
+    'Horarios Virtuales Jueves': len(excel_data_df.Nombre)*" ",
+    'Horarios Virtuales Viernes': len(excel_data_df.Nombre)*" ",
+    'Horarios Virtuales Sabado': len(excel_data_df.Nombre)*" "
 }
 
-# crearTutoresConRangosHorarios(DatosTutoresPayload)
+tutores = []
+
+for i in range(len(excel_data_df.Nombre)):
+    tutor = {
+        'Tutor': structure['Tutor'][i],
+        'Habilitado/Deshabilitado': structure['Habilitado/Deshabilitado'][i],
+        'Email': "",
+        'Telefono': parseWhatsappNumber(structure['Telefono'][i]),
+        'Clases': structure['Clases'][i],
+        'Horario Lunes': structure['Horario Lunes'][i],
+        'Horario Martes': structure['Horario Martes'][i],
+        'Horario Miercoles': structure['Horario Miercoles'][i],
+        'Horario Jueves': structure['Horario Jueves'][i],
+        'Horarios Viernes': structure['Horarios Viernes'][i],
+        'Horario Sabado': structure['Horario Sabado'][i],
+        'Horarios Virtuales Lunes': "",
+        'Horarios Virtuales Martes': "",
+        'Horarios Virtuales Miercoles': "",
+        'Horarios Virtuales Jueves': "",
+        'Horarios Virtuales Viernes': "",
+        'Horarios Virtuales Sabado': ""
+    }
+    tutores.append(tutor)
+
+crearTutoresConRangosHorarios(tutores)
 
 
 # ==================================================================================================
