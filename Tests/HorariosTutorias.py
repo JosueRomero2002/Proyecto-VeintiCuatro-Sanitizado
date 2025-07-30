@@ -7,16 +7,15 @@ from shareplum import Site
 from shareplum import Office365
 import random
 import difflib
-import pandas
+
+# Autenticación en SharePoint
 import os
 from dotenv import load_dotenv
 
 load_dotenv()  
-
 userSh = os.getenv('SHAREPOINT_USER')
 passSh = os.getenv('SHAREPOINT_PASS')
 
-# Autenticación en SharePoint
 authcookie = Office365('https://unitechn.sharepoint.com', username=userSh, password=passSh).GetCookies()
 
 site = Site('https://unitechn.sharepoint.com/sites/TutoriasUNITEC2/', authcookie=authcookie)
@@ -316,19 +315,22 @@ def crearTutoresConRangosHorarios(DatosTutores):
         except Exception as e:
             print(f"Error al agregar al tutor {tutor['Tutor']}: {e}")
 
+
+# ==================================================================================================
 # ==================================================================================================
 
 # # Datos Tutores
-# DatosTutoresPayload = [{'Tutor': 'ERICK EDUARDO ARITA HENRIQUEZ',
+DatosTutoresPayload = [
+# {'Tutor': 'ERICK EDUARDO ARITA HENRIQUEZ',
 #   'Habilitado/Deshabilitado': 'Yes',
 #   'Email': '',
 #   'Telefono': '97002422',
-#   'Clases': 'Algebra, Fisica 3, Circuitos DC, Circuitos AC',
-#   'Horario Lunes': '9:55 am -  11:15 pm, 11:15 am - 12:35 pm, 2:40 pm - 4:00 pm',
-#   'Horario Martes': '9:55 am -  11:15 pm, 11:15 am - 12:35 pm, 2:40 pm - 4:00 pm',
-#   'Horario Miercoles': '9:55 am -  11:15 pm, 11:15 am - 12:35 pm, 2:40 pm - 4:00 pm',
-#   'Horario Jueves': '9:55 am -  11:15 pm, 11:15 am - 12:35 pm, 2:40 pm - 4:00 pm',
-#   'Horarios Viernes': '2:40 pm-5:20 pm',
+#   'Clases': 'Intro al algebra, Algebra, Geometria y trigonometria, Calculo 1, Calculo 2, Algebra lineal, Ecuaciones diferenciales , Fisica 2, Fisica 3, Circuitos DC, Circuitos AC, Mecanica de Fluidos, Electronica 1, Electronica 2',
+#   'Horario Lunes': '1:20 pm - 5:20 pm',
+#   'Horario Martes': '1:20 pm - 5:20 pm',
+#   'Horario Miercoles': '1:20 pm - 5:20 pm',
+#   'Horario Jueves': '1:20 pm - 5:20 pm',
+#   'Horarios Viernes': '1:20 pm - 5:20 pm',
 #   'Horario Sabado': '',
 #   'Horarios Virtuales Lunes': '',
 #   'Horarios Virtuales Martes': '',
@@ -336,16 +338,17 @@ def crearTutoresConRangosHorarios(DatosTutores):
 #   'Horarios Virtuales Jueves': '',
 #   'Horarios Virtuales Viernes': '',
 #   'Horarios Virtuales Sabado': ''},
+
 #  {'Tutor': 'RONALD JOSEP PERDOMO MENDOZA',
 #   'Habilitado/Deshabilitado': 'Yes',
 #   'Email': '',
 #   'Telefono': '94435540',
-#   'Clases': 'Algebra',
-#   'Horario Lunes': '8:10 am - 12:35 pm, 1:20 pm - 2:40 pm, 4:00 pm - 6:40 pm',
-#   'Horario Martes': '8:10 am - 12:35 pm, 1:20 pm - 2:40 pm, 4:00 pm - 6:40 pm',
-#   'Horario Miercoles': '8:10 am - 12:35 pm, 1:20 pm - 2:40 pm, 4:00 pm - 6:40 pm',
-#   'Horario Jueves': '1:20 pm - 2:40 pm, 04:00 pm - 06:40 pm',
-#   'Horarios Viernes': '8:10 am - 12:35 pm, 1:20 pm - 2:40 pm, 4:00 pm - 6:40 pm',
+#   'Clases': 'Electronica 1, Algebra, Introducción al álgebra, Ofimatica avanzada',
+#   'Horario Lunes': '8:10 am - 9:55 am, 11:15 am - 12:35 pm, 01:20 am - 4:00 pm',
+#   'Horario Martes': '8:10 am - 9:55 am, 11:15 am - 12:35 pm, 01:20 am - 4:00 pm',
+#   'Horario Miercoles': '8:10 am - 9:55 am, 11:15 am - 12:35 pm',
+#   'Horario Jueves': '8:10 am - 9:55 am, 11:15 am - 12:35 pm, 01:20 pm - 4:00 pm ',
+#   'Horarios Viernes': '8:10 am - 12:35 pm, 1:20 pm - 4:00 pm, 5:20 pm - 8:00 pm',
 #   'Horario Sabado': '',
 #  'Horarios Virtuales Lunes': '',
 #   'Horarios Virtuales Martes': '',
@@ -353,16 +356,17 @@ def crearTutoresConRangosHorarios(DatosTutores):
 #   'Horarios Virtuales Jueves': '',
 #   'Horarios Virtuales Viernes': '',
 #   'Horarios Virtuales Sabado': ''},
+
 #  {'Tutor': 'KENNETH DANIEL REYES REYES',
 #   'Habilitado/Deshabilitado': 'Yes',
 #   'Email': '',
 #   'Telefono': '98918825',
-#   'Clases': 'Fisica 1',
-#   'Horario Lunes': '11:15 am - 5:00 pm',
-#   'Horario Martes': '11:15 am - 5:00 pm',
-#   'Horario Miercoles': '11:15 am - 5:00 pm',
-#   'Horario Jueves': '11:15 am - 5:00 pm',
-#   'Horarios Viernes': '',
+#   'Clases': 'Programación 1, Programación 2, Programación 3, Lab. de Programación 1, Lab. de Programación 2, Lab. de Programación 3, Programación Estructurada, Lógica de Programación, Teoría de Base de Datos 1, Teoría de Base de Datos 2, Intro. a la Computacion y Ciencia de Datos, Fisica 1',
+#   'Horario Lunes': '12:00 pm - 4:00 pm, 5:20 pm - 6:40 pm',
+#   'Horario Martes': '12:00 pm - 4:00 pm, 5:20 pm - 6:40 pm',
+#   'Horario Miercoles': '12:00 pm - 4:00 pm, 5:20 pm - 6:40 pm',
+#   'Horario Jueves': '12:00 pm - 4:00 pm, 5:20 pm - 6:40 pm',
+#   'Horarios Viernes': '12:00 pm - 4:00 pm, 5:20 pm - 6:40 pm',
 #   'Horario Sabado': '',
 #   'Horarios Virtuales Lunes': '',
 #   'Horarios Virtuales Martes': '',
@@ -370,6 +374,25 @@ def crearTutoresConRangosHorarios(DatosTutores):
 #   'Horarios Virtuales Jueves': '',
 #   'Horarios Virtuales Viernes': '',
 #   'Horarios Virtuales Sabado': ''},
+
+#  {'Tutor': 'ASHLY GISSELE MARTINEZ GRANADOS',
+#   'Habilitado/Deshabilitado': 'Yes',
+#   'Email': '',
+#   'Telefono': '97033933',
+#   'Clases': 'Intro a Algebra, Algebra, Geometria y Trigonometria',
+#   'Horario Lunes': '11:15 am - 5:20 pm',
+#   'Horario Martes': '11:15 am - 5:20 pm',
+#   'Horario Miercoles': '11:15 am - 5:20 pm',
+#   'Horario Jueves': '11:15 am - 5:20 pm',
+#   'Horarios Viernes': '8:10 am - 9:30 am',
+#   'Horario Sabado': '',
+#   'Horarios Virtuales Lunes': '',
+#   'Horarios Virtuales Martes': '',
+#   'Horarios Virtuales Miercoles': '',
+#   'Horarios Virtuales Jueves': '',
+#   'Horarios Virtuales Viernes': '',
+#   'Horarios Virtuales Sabado': ''},
+
 #  {'Tutor': 'FARES ISAAC ENAMORADO GALEANO',
 #   'Habilitado/Deshabilitado': 'Yes',
 #   'Email': '',
@@ -387,16 +410,17 @@ def crearTutoresConRangosHorarios(DatosTutores):
 #   'Horarios Virtuales Jueves': '',
 #   'Horarios Virtuales Viernes': '',
 #   'Horarios Virtuales Sabado': ''},
+
 #  {'Tutor': 'JOSUE ARTURO DEL VALLE ZEPEDA',
 #   'Habilitado/Deshabilitado': 'Yes',
 #   'Email': '',
 #   'Telefono': '95870132',
-#   'Clases': 'Dibujo Técnico (Solidworks), Variable Compleja, Ecuaciones Diferenciales',
-#   'Horario Lunes': '11:15 am - 12:35 pm, 6:40 pm - 8:00 pm',
-#   'Horario Martes': '11:15 am - 12:35 pm, 6:40 pm - 8:00 pm',
-#   'Horario Miercoles': '11:15 am - 12:35 pm, 5:20 pm - 8:00 pm',
-#   'Horario Jueves': '11:15 am - 12:35 pm, 5:20 pm - 8:00 pm',
-#   'Horarios Viernes': '11:15 am - 12:35 pm, 1:20 pm - 2:40 pm',
+#   'Clases': 'Introducción al álgebra, Álgebra, Geometría y Trigonometría, Álgebra Lineal, Cálculo 1, Cálculo 2, Dibujo Técnico (Solidworks), Variable Compleja, Ecuaciones Diferenciales, Física 2, Física 3, Estática, Dinámica, Resistencia de Materiales 1, Matemáticas Discretas, Programación C++, Análisis de Circuitos en DC, Análisis de Circuitos en AC, Electrónica 1, Electrónica 2, Compuertas Lógicas, Transformadores y motores eléctricos',
+#   'Horario Lunes': '1:20 pm - 2:40 pm, 6:40 pm - 8:00 pm',
+#   'Horario Martes': '1:20 pm - 2:40 pm, 6:40 pm - 8:00 pm',
+#   'Horario Miercoles': '1:20 pm - 2:40 pm, 6:40 pm - 8:00 pm',
+#   'Horario Jueves': '1:20 pm - 2:40 pm, 6:40 pm - 8:00 pm',
+#   'Horarios Viernes': '1:20 pm - 6:40 pm',
 #   'Horario Sabado': '',
 #  'Horarios Virtuales Lunes': '',
 #   'Horarios Virtuales Martes': '',
@@ -404,6 +428,7 @@ def crearTutoresConRangosHorarios(DatosTutores):
 #   'Horarios Virtuales Jueves': '',
 #   'Horarios Virtuales Viernes': '',
 #   'Horarios Virtuales Sabado': ''},
+
 #  {'Tutor': 'VALERIA ESTEFANIA SOLORZANO SUAZO',
 #   'Habilitado/Deshabilitado': 'Yes',
 #   'Email': '',
@@ -421,16 +446,17 @@ def crearTutoresConRangosHorarios(DatosTutores):
 #   'Horarios Virtuales Jueves': '',
 #   'Horarios Virtuales Viernes': '',
 #   'Horarios Virtuales Sabado': ''},
+
 #  {'Tutor': 'MEYBELIN SARAI BONILLA RIVERA',
 #   'Habilitado/Deshabilitado': 'Yes',
 #   'Email': '',
 #   'Telefono': '93664394',
-#   'Clases': 'Algebra Lineal, Calculo 1',
-#   'Horario Lunes': '11:15 am - 12:15 pm, 3:00 pm - 4:00 pm, 5:30 pm - 6:30 pm',
-#   'Horario Martes': '11:15 am - 12:15 pm, 3:00 pm - 4:00 pm, 5:30 pm - 6:30 pm',
-#   'Horario Miercoles': '11:15 am - 12:15 pm, 3:00 pm - 4:00 pm, 5:30 pm - 6:30 pm',
-#   'Horario Jueves': '11:15am - 12:15pm, 3:00 pm - 4:00 pm, 5:30 pm - 6:30 pm',
-#   'Horarios Viernes': '11:15 am - 12:15 pm, 1:00 pm - 3:00 pm',
+#   'Clases': 'Álgebra Lineal, Intro al Algebra',
+#   'Horario Lunes': '6:00 pm - 7:00 pm',
+#   'Horario Martes': '8:30 am - 10:30 am',
+#   'Horario Miercoles': '8:30 am - 10:30 am',
+#   'Horario Jueves': '8:30 am - 10:30 am',
+#   'Horarios Viernes': '3:00 pm - 5:00 pm',
 #   'Horario Sabado': '',
 #  'Horarios Virtuales Lunes': '',
 #   'Horarios Virtuales Martes': '',
@@ -438,6 +464,7 @@ def crearTutoresConRangosHorarios(DatosTutores):
 #   'Horarios Virtuales Jueves': '',
 #   'Horarios Virtuales Viernes': '',
 #   'Horarios Virtuales Sabado': ''},
+
 #  {'Tutor': 'FERNANDO DAVID SOSA FLORES',
 #   'Habilitado/Deshabilitado': 'Yes',
 #   'Email': '',
@@ -455,23 +482,9 @@ def crearTutoresConRangosHorarios(DatosTutores):
 #   'Horarios Virtuales Jueves': '',
 #   'Horarios Virtuales Viernes': '',
 #   'Horarios Virtuales Sabado': ''},
-#  {'Tutor': 'ISAAC MAURICIO JUAREZ BACA',
-#   'Habilitado/Deshabilitado': 'Yes',
-#   'Email': '',
-#   'Telefono': '97949526',
-#   'Clases': 'Geometria y Trigonometria, Calculo 1, Calculo 2',
-#   'Horario Lunes': '5:20 pm - 6:40 pm, 8:00 pm - 9:20 pm',
-#   'Horario Martes': '5:20 pm - 6:40 pm, 8:00 pm - 9:20 pm',
-#   'Horario Miercoles': '5:20 pm - 6:40 pm, 8:00 pm - 9:20 pm',
-#   'Horario Jueves': '5:20 pm - 6:40 pm, 8:00 pm - 9:20 pm',
-#   'Horarios Viernes': '5:20 pm - 6:40 pm, 8:00 pm - 9:20 pm',
-#   'Horario Sabado': '',
-#   'Horarios Virtuales Lunes': '',
-#   'Horarios Virtuales Martes': '',
-#   'Horarios Virtuales Miercoles': '',
-#   'Horarios Virtuales Jueves': '',
-#   'Horarios Virtuales Viernes': '',
-#   'Horarios Virtuales Sabado': ''},
+
+
+
 #  {'Tutor': 'ALEX ROBERTO HERNANDEZ GARCIA',
 #   'Habilitado/Deshabilitado': 'Yes',
 #   'Email': '',
@@ -489,33 +502,17 @@ def crearTutoresConRangosHorarios(DatosTutores):
 #   'Horarios Virtuales Jueves': '4:30 pm - 8:00 pm',
 #   'Horarios Virtuales Viernes': '4:30 pm - 8:00 pm',
 #   'Horarios Virtuales Sabado': ''},
-# #  {'Tutor': 'Daniel Hernandez',
-# #   'Habilitado/Deshabilitado': 'Yes',
-# #   'Email': '',
-# #   'Telefono': '',
-# #   'Clases': '',
-# #   'Horario Lunes': '',
-# #   'Horario Martes': '8:00 am-11:30 am',
-# #   'Horario Miercoles': '8:00 am-11:30 am',
-# #   'Horario Jueves': '8:00 am-11:30 am',
-# #   'Horarios Viernes': '8:00 am-11:30 am, 1:00 pm-3:00 pm',
-# #   'Horario Sabado': '',
-# #   'Horarios Virtuales Lunes': '',
-# #   'Horarios Virtuales Martes': '8:00 am-11:30 am',
-# #   'Horarios Virtuales Miercoles': '8:00 am-11:30 am',
-# #   'Horarios Virtuales Jueves': '8:00 am-11:30 am',
-# #   'Horarios Virtuales Viernes': '8:00 am-11:30 am, 1:00 pm-3:00 pm',
-# #   'Horarios Virtuales Sabado': ''},
-#  {'Tutor': 'DIEGO ANDRES RIVERA VALLE',
+
+#  {'Tutor': 'DANIEL ALEXANDER HERNANDEZ ESCOTO',
 #   'Habilitado/Deshabilitado': 'Yes',
 #   'Email': '',
-#   'Telefono': '94744365',
-#   'Clases': 'Calculo 1, Algebra Lineal, Calculo 2, Fisica 1, Fisica 3, Variable Compleja, Circuitos DC',
-#   'Horario Lunes': '8:00 am - 2:40 pm, 4:00 pm - 5:20 pm',
-#     'Horario Martes': '8:00 am - 2:40 pm, 4:00 pm - 5:20 pm',
-#     'Horario Miercoles': '8:00 am - 2:40 pm, 4:00 pm - 5:20 pm',
-#     'Horario Jueves': '8:00 am - 2:40 pm, 4:00 pm - 5:20 pm',
-#     'Horarios Viernes': '8:00 am - 2:40 pm, 4:00 pm - 5:20 pm',
+#   'Telefono': '99825386',
+#   'Clases': 'Algebra, Intro al Algebra, Geometria y trigonometria, Calculo 1, Fisica 2, Circuitos DC',
+#   'Horario Lunes': '7:00 am - 12:35 pm',
+#   'Horario Martes': '7:00 am - 12:35 pm',
+#   'Horario Miercoles': '7:00 am - 12:35 pm',
+#   'Horario Jueves': '7:00 am - 12:35 pm',
+#   'Horarios Viernes': '7:00 am - 11:15 am',
 #   'Horario Sabado': '',
 #   'Horarios Virtuales Lunes': '',
 #   'Horarios Virtuales Martes': '',
@@ -523,6 +520,25 @@ def crearTutoresConRangosHorarios(DatosTutores):
 #   'Horarios Virtuales Jueves': '',
 #   'Horarios Virtuales Viernes': '',
 #   'Horarios Virtuales Sabado': ''},
+
+#  {'Tutor': 'DIEGO ANDRES RIVERA VALLE',
+#   'Habilitado/Deshabilitado': 'Yes',
+#   'Email': '',
+#   'Telefono': '94744365',
+#   'Clases': 'Fisica 1, Fisica 2, Fisica 3, Dibujo Tecnico, Ecuaciones diferenciales, Variable Compleja, Matematicas Discretas, Estatica, Dinamica, Analisis de Circuitos DC, Analisis de Circuitos AC, Termodinamica, Geometria, Electronica 1, Sensores y actuadores, Maquinas Hidraulicas, Mecanismos, Mecanica de materiales',
+#     'Horario Lunes': '9:55 am - 4:00 pm',
+#     'Horario Martes': '12:35 pm - 4:00 pm',
+#     'Horario Miercoles': '9:55 am - 4:00 pm',
+#     'Horario Jueves': '2:40 pm - 4:00 pm',
+#     'Horarios Viernes': '12:35 pm - 4:00 pm',
+#   'Horario Sabado': '',
+#   'Horarios Virtuales Lunes': '',
+#   'Horarios Virtuales Martes': '',
+#   'Horarios Virtuales Miercoles': '',
+#   'Horarios Virtuales Jueves': '',
+#   'Horarios Virtuales Viernes': '',
+#   'Horarios Virtuales Sabado': '9:55 am - 4:00 pm'},
+
 #  {'Tutor': 'ANTHONY EMANUEL FUNEZ GUERRA',
 #   'Habilitado/Deshabilitado': 'Yes',
 #   'Email': '',
@@ -540,16 +556,17 @@ def crearTutoresConRangosHorarios(DatosTutores):
 #   'Horarios Virtuales Jueves': '',
 #   'Horarios Virtuales Viernes': '',
 #   'Horarios Virtuales Sabado': ''},
+
 #  {'Tutor': 'IAN ROMAN BELTRAND PADILLA',
 #   'Habilitado/Deshabilitado': 'Yes',
 #   'Email': '',
 #   'Telefono': '31693049',
-#   'Clases': 'Ecuaciones Diferenciales',
-#   'Horario Lunes': '9:55 am - 11:15 am, 4:00 pm - 5:20 pm',
-#   'Horario Martes': '9:55 am - 11:15 am, 4:00 pm - 5:20 pm',
-#   'Horario Miercoles': '9:55 am - 11:15 am, 4:00 pm - 5:20 pm',
-#   'Horario Jueves': '9:55 am - 11:15 am, 4:00 pm - 5:20 pm',
-#   'Horarios Viernes': '9:55 am - 11:15 am, 11:15 am - 12:35 pm, 1:20 pm - 2:40 pm, 2:40 pm - 4:00 pm, 4:00 pm - 5:20 pm',
+#   'Clases': 'Intro al Algebra, Algebra, Geometria y Trigonometria, Calculo 1, Calculo 2, Ecuaciones Diferenciales, Matematicas Discretas, Algebra lineal, Fisica 1, Fisica 2, Estadistica Matematica 1, Estadistica Matematica 2, Investigacion de Operaciones',
+#   'Horario Lunes': '11:15 am - 12:35 pm, 1:20 pm - 2:40 pm, 2:40 pm - 4:00 pm, 4:00 pm - 5:20 pm',
+#   'Horario Martes': '11:15 am - 12:35 pm, 1:20 pm - 2:40 pm, 2:40 pm - 4:00 pm, 4:00 pm - 5:20 pm',
+#   'Horario Miercoles': '11:15 am - 12:35 pm, 1:20 pm - 2:40 pm, 2:40 pm - 4:00 pm, 4:00 pm - 5:20 pm',
+#   'Horario Jueves': '11:15 am - 12:35 pm, 1:20 pm - 2:40 pm, 2:40 pm - 4:00 pm, 4:00 pm - 5:20 pm',
+#   'Horarios Viernes': '11:15 am - 12:35 pm, 1:20 pm - 2:40 pm, 2:40 pm - 4:00 pm, 4:00 pm - 5:20 pm',
 #   'Horario Sabado': '',
 #  'Horarios Virtuales Lunes': '',
 #   'Horarios Virtuales Martes': '',
@@ -557,16 +574,183 @@ def crearTutoresConRangosHorarios(DatosTutores):
 #   'Horarios Virtuales Jueves': '',
 #   'Horarios Virtuales Viernes': '',
 #   'Horarios Virtuales Sabado': ''},
+
+
+
+# {'Tutor': 'DANILO ENRIQUE ALVARADO HERNANDEZ',
+#     'Habilitado/Deshabilitado': 'Yes',
+#     'Email': '',
+#     'Telefono': '31959108',
+#     'Clases': 'Ecuaciones diferenciales, Variable compleja, Electronica 1, Electronica 2, Teoria de control, Intro al Algebra',
+#     'Horario Lunes': '10:00 am - 11:00 am',
+#     'Horario Martes': '10:00 am - 11:00 am',
+#     'Horario Miercoles': '10:00 am - 11:00 am',
+#     'Horario Jueves': '10:00 am - 11:00 am',
+#     'Horarios Viernes': '10:00 am - 11:00 am',
+#     'Horario Sabado': '',
+#     'Horarios Virtuales Lunes': '',
+#     'Horarios Virtuales Martes': '',
+#     'Horarios Virtuales Miercoles': '',
+#     'Horarios Virtuales Jueves': '',
+#     'Horarios Virtuales Viernes': '',
+#     'Horarios Virtuales Sabado': ''},
+
+    # {'Tutor': 'FERNANDO JOSUÉ PORTILLO PEÑA',
+    # 'Habilitado/Deshabilitado': 'Yes',
+    # 'Email': '',
+    # 'Telefono': '95889108',
+    # 'Clases': 'Introduccion al Algebra, Algebra, Geometria y trigonometria, Calculo 1, Calculo 2',
+    # 'Horario Lunes': '11:15 am - 12:35 pm',
+    # 'Horario Martes': '11:15 am - 12:35 pm',
+    # 'Horario Miercoles': '11:15 am - 12:35 pm',
+    # 'Horario Jueves': '11:15 am - 12:35 pm, 4:00 pm - 5:20 pm',
+    # 'Horarios Viernes': '',
+    # 'Horario Sabado': '',
+    # 'Horarios Virtuales Lunes': '',
+    # 'Horarios Virtuales Martes': '',
+    # 'Horarios Virtuales Miercoles': '',
+    # 'Horarios Virtuales Jueves': '',
+    # 'Horarios Virtuales Viernes': '',
+    # 'Horarios Virtuales Sabado': ''},
+
+    # {'Tutor': 'JABES DANIEL LOPEZ ROMERO',
+    # 'Habilitado/Deshabilitado': 'Yes',
+    # 'Email': '',
+    # 'Telefono': '33770733',
+    # 'Clases': 'Intro al Algebra, Algebra, Geometria y Trigonometria, Calculo 1, Algebra Lineal, Quimica',
+    # 'Horario Lunes': '8:00 am - 12:00 pm, 4:00 pm - 5:00 pm',
+    # 'Horario Martes': '8:00 am - 12:00 pm, 4:00 pm - 5:00 pm',
+    # 'Horario Miercoles': '8:00 am - 12:00 pm, 4:00 pm - 5:00 pm',
+    # 'Horario Jueves': '8:00 am - 12:00 pm, 4:00 pm - 5:00 pm',
+    # 'Horarios Viernes': '8:00 am - 12:00 pm, 4:00 pm - 5:00 pm',
+    # 'Horario Sabado': '',
+    # 'Horarios Virtuales Lunes': '',
+    # 'Horarios Virtuales Martes': '',
+    # 'Horarios Virtuales Miercoles': '',
+    # 'Horarios Virtuales Jueves': '',
+    # 'Horarios Virtuales Viernes': '',
+    # 'Horarios Virtuales Sabado': '' },
+
+    # {'Tutor': 'JONATHAN ANDRES UMANA LOPEZ',
+    # 'Habilitado/Deshabilitado': 'Yes',
+    # 'Email': '',
+    # 'Telefono': '96201348',
+    # 'Clases': 'Intro al Algebra, Calculo 2, Ecuaciones Diferenciales, Fisica 1, Electronica 1, Electronica 2, Algebra, Calculo 1, Geometria, Dinamica, Estatica',
+    # 'Horario Lunes': '8:10 am - 9:30 am, 9:55 am - 12:30 pm, 1:00 pm - 4:00 pm',
+    # 'Horario Martes': '8:10 am - 9:30 am, 9:55 am - 12:30 pm, 1:00 pm - 4:00 pm',
+    # 'Horario Miercoles': '8:10 am - 9:30 am, 9:55 am - 12:30 pm, 1:00 pm - 4:00 pm',
+    # 'Horario Jueves': '8:10 am - 9:30 am, 9:55 am - 12:30 pm, 1:00 pm - 4:00 pm',
+    # 'Horarios Viernes': '8:10 am - 12:30 pm, 1:00 pm - 8:00 pm',
+    # 'Horario Sabado': '',
+    # 'Horarios Virtuales Lunes': '',
+    # 'Horarios Virtuales Martes': '',
+    # 'Horarios Virtuales Miercoles': '',
+    # 'Horarios Virtuales Jueves': '',
+    # 'Horarios Virtuales Viernes': '',
+    # 'Horarios Virtuales Sabado': '' },
+
+    # {'Tutor': 'JOSUE MANUEL GAVIDIA GONZALEZ',
+    # 'Habilitado/Deshabilitado': 'Yes',
+    # 'Email': '',
+    # 'Telefono': '33751005',
+    # 'Clases': 'Intro al Algebra, Logica de Programación, Programación 1, Programación para Ingeniería',
+    # 'Horario Lunes': '8:10 am - 1:20 pm, 2:40 pm - 5:20 pm, 6:40 pm - 8:00 pm',
+    # 'Horario Martes': '9:30 am - 1:20 pm, 2:40 pm - 5:20 pm, 6:40 pm - 8:00 pm',
+    # 'Horario Miercoles': '8:10 am - 1:20 pm, 2:40 pm - 5:20 pm, 6:40 pm - 8:00 pm',
+    # 'Horario Jueves': '8:10 am - 1:20 pm, 2:40 pm - 5:20 pm, 6:40 pm - 8:00 pm',
+    # 'Horarios Viernes': '8:10 am - 1:20 pm, 2:40 pm - 5:20 pm, 6:40 pm - 8:00 pm',
+    # 'Horario Sabado': '',
+    # 'Horarios Virtuales Lunes': '',
+    # 'Horarios Virtuales Martes': '',
+    # 'Horarios Virtuales Miercoles': '',
+    # 'Horarios Virtuales Jueves': '',
+    # 'Horarios Virtuales Viernes': '',
+    # 'Horarios Virtuales Sabado': '' },
+
+    # {'Tutor': 'OSVALDO ANDRES DACOSTA FERNANDEZ',
+    # 'Habilitado/Deshabilitado': 'Yes',
+    # 'Email': '',
+    # 'Telefono': '95086037',
+    # 'Clases': 'Estadistica Matematica 1, Introducción a Finanzas y Economía',
+    # 'Horario Lunes': '4:00 pm - 5:20 pm, 6:40 pm - 7:40 pm',
+    # 'Horario Martes': '4:00 pm - 5:20 pm, 6:40 pm - 7:40 pm',
+    # 'Horario Miercoles': '4:00 pm - 5:20 pm, 6:40 pm - 7:40 pm',
+    # 'Horario Jueves': '4:00 pm - 5:0 pm, 6:40 pm - 7:40 pm',
+    # 'Horarios Viernes': '',
+    # 'Horario Sabado': '',
+    # 'Horarios Virtuales Lunes': '',
+    # 'Horarios Virtuales Martes': '',
+    # 'Horarios Virtuales Miercoles': '',
+    # 'Horarios Virtuales Jueves': '',
+    # 'Horarios Virtuales Viernes': '',
+    # 'Horarios Virtuales Sabado': ''},
+
+    # {'Tutor': 'CARLOS MARCELO ALVARADO RIVAS',
+    # 'Habilitado/Deshabilitado': 'Yes',
+    # 'Email': '',
+    # 'Telefono': '97897906',
+    # 'Clases': 'Quimica, Calculo 1, Calculo 2, Fisica 1, Ecuaciones diferenciales, Variable Compleja, Estatica, Análisis de circuitos en DC, Análisis de circuitos en AC',
+    # 'Horario Lunes': '',
+    # 'Horario Martes': '10:00 am - 12:00 pm',
+    # 'Horario Miercoles': '',
+    # 'Horario Jueves': '10:00 am - 12:00 pm',
+    # 'Horarios Viernes': '5:00 pm - 7:00 pm',
+    # 'Horario Sabado': '',
+    # 'Horarios Virtuales Lunes': '',
+    # 'Horarios Virtuales Martes': '',
+    # 'Horarios Virtuales Miercoles': '',
+    # 'Horarios Virtuales Jueves': '',
+    # 'Horarios Virtuales Viernes': '',
+    # 'Horarios Virtuales Sabado': ''},
+
+    # {'Tutor': 'CARLOS ENRIQUE LOPEZ ARITA',
+    # 'Habilitado/Deshabilitado': 'Yes',
+    # 'Email': '',
+    # 'Telefono': '98437598',
+    # 'Clases': 'Geometria y Trigonometria, Calculo 1',
+    # 'Horario Lunes': '8:10 am - 9:30 am, 9:55 am - 11:15 am',
+    # 'Horario Martes': '8:10 am - 9:30 am, 9:55 am - 11:15 am',
+    # 'Horario Miercoles': '8:10 am - 9:30 am, 9:55 am - 11:15 am',
+    # 'Horario Jueves': '8:10 am - 9:30 am, 9:55 am - 11:15 am',
+    # 'Horarios Viernes': '',
+    # 'Horario Sabado': '',
+    # 'Horarios Virtuales Lunes': '',
+    # 'Horarios Virtuales Martes': '',
+    # 'Horarios Virtuales Miercoles': '',
+    # 'Horarios Virtuales Jueves': '',
+    # 'Horarios Virtuales Viernes': '',
+    # 'Horarios Virtuales Sabado': ''},
+
+    {'Tutor': 'JENNIFER LAGOS HERNÁNDEZ',
+    'Habilitado/Deshabilitado': 'Yes',
+    'Email': '89206905',
+    'Telefono': '',
+    'Clases': 'Intro al algebra, Geometria y Trigonometria',
+    'Horario Lunes': '6:45 am - 8:10 am, 12:30 pm - 1:20 pm, 2:40 pm - 6:40 pm',
+    'Horario Martes': '6:45 am - 8:10 am, 12:30 pm - 1:20 pm, 2:40 pm - 6:40 pm',
+    'Horario Miercoles': '6:45 am - 8:10 am, 12:30 pm - 1:20 pm, 2:40 pm - 6:40 pm',
+    'Horario Jueves': '6:45 am - 8:10 am, 12:30 pm - 1:20 pm, 2:40 pm - 6:40 pm',
+    'Horarios Viernes': '6:45 am - 8:10 am, 11:15 am - 5:20 pm',
+    'Horario Sabado': '',
+    'Horarios Virtuales Lunes': '',
+    'Horarios Virtuales Martes': '',
+    'Horarios Virtuales Miercoles': '',
+    'Horarios Virtuales Jueves': '',
+    'Horarios Virtuales Viernes': '',
+    'Horarios Virtuales Sabado': ''},
+#-----------------------------------------------------------------------------------------------------
+
+#DATOS LISTIS PERO DICE PROVICIONAL
 #  {'Tutor': 'JUAN SEBASTIAN MELENDEZ CRUZ',
 #   'Habilitado/Deshabilitado': 'Yes',
 #   'Email': '',
 #   'Telefono': '98722061',
-#   'Clases': 'Circuitos DC',
-#   'Horario Lunes': '2:40 pm - 4:00 pm',
-#   'Horario Martes': '2:40 pm - 4:00 pm',
-#   'Horario Miercoles': '2:40 pm - 4:00 pm',
-#   'Horario Jueves': '2:40 pm - 4:00 pm',
-#   'Horarios Viernes': '2:40 pm -4:00 pm, 6:40 pm - 8:00 pm',
+#   'Clases': 'Circuitos DC, Analisis de circuitos electricos 1, Analisis de circuitos electricos 2',
+#   'Horario Lunes': '1:20 pm - 2:40 pm, 4:00 pm - 6:40 pm',
+#   'Horario Martes': '1:20 pm - 2:40 pm, 4:00 pm - 6:40 pm',
+#   'Horario Miercoles': '1:20 pm - 2:40 pm, 4:00 pm - 6:40 pm',
+#   'Horario Jueves': '1:20 pm - 2:40 pm, 4:00 pm - 6:40 pm',
+#   'Horarios Viernes': '1:20 pm - 2:40 pm, 4:00 pm - 6:40 pm',
 #   'Horario Sabado': '',
 #   'Horarios Virtuales Lunes': '',
 #   'Horarios Virtuales Martes': '',
@@ -574,63 +758,194 @@ def crearTutoresConRangosHorarios(DatosTutores):
 #   'Horarios Virtuales Jueves': '',
 #   'Horarios Virtuales Viernes': '',
 #   'Horarios Virtuales Sabado': ''},
-# ]
+   
+
+#DATOS LISTOS PERO DICE QUE SOLO PAI - OFIMATICA
+    # {'Tutor': 'ALEX REYES GUTIERREZ',
+    # 'Habilitado/Deshabilitado': 'Yes',
+    # 'Email': '',
+    # 'Telefono': '32407099',
+    # 'Clases': 'Solo PAI - Ofimatica',
+    # 'Horario Lunes': '1:20 pm - 5:20 pm',
+    # 'Horario Martes': '',
+    # 'Horario Miercoles': '1:20 pm - 5:20 pm',
+    # 'Horario Jueves': '1:20 pm - 5:20 pm',
+    # 'Horarios Viernes': '1:20 pm - 5:20 pm',
+    # 'Horario Sabado': '',
+    # 'Horarios Virtuales Lunes': '',
+    # 'Horarios Virtuales Martes': '',
+    # 'Horarios Virtuales Miercoles': '',
+    # 'Horarios Virtuales Jueves': '',
+    # 'Horarios Virtuales Viernes': '',
+    # 'Horarios Virtuales Sabado': ''}
+
+#DATOS LISTOS PERO EL TELEFONO NO ESTA EN EL LINK
+    # {'Tutor': 'ANA VALERIA FLORES GALINDO',
+    # 'Habilitado/Deshabilitado': 'Yes',
+    # 'Email': '',
+    # 'Telefono': '33118152',
+    # 'Clases': 'Etica y Ciudadanía',
+    # 'Horario Lunes': '8:10 am - 9:30 am, 9:55 am - 11:15 am',
+    # 'Horario Martes': '8:10 am - 9:30 am, 9:55 am - 11:15 am',
+    # 'Horario Miercoles': '8:10 am - 9:30 am, 9:55 am - 11:15 am',
+    # 'Horario Jueves': '8:10 am - 9:30 am, 9:55 am - 11:15 am',
+    # 'Horarios Viernes': '',
+    # 'Horario Sabado': '',
+    # 'Horarios Virtuales Lunes': '',
+    # 'Horarios Virtuales Martes': '',
+    # 'Horarios Virtuales Miercoles': '',
+    # 'Horarios Virtuales Jueves': '',
+    # 'Horarios Virtuales Viernes': '',
+    # 'Horarios Virtuales Sabado': ''},
+
+#DATOS LISTOS PERO DICE QUE SOLO PAI - DIBUJO
+    # {'Tutor': 'Yasin Hernandez',
+    # 'Habilitado/Deshabilitado': 'Yes',
+    # 'Email': '',
+    # 'Telefono': '87668930',
+    # 'Clases': 'Dibujo',
+    # 'Horario Lunes': '11:15 am - 12:00 pm, 3:00 pm - 4:00 pm',
+    # 'Horario Martes': '11:15 am - 12:00 pm, 3:00 pm - 4:00 pm',
+    # 'Horario Miercoles': '11:15 am - 12:00 pm, 3:00 pm - 4:00 pm',
+    # 'Horario Jueves': '11:15 am - 12:00 pm, 3:00 pm - 4:00 pm',
+    # 'Horarios Viernes': '11:15 am - 12:00 pm, 3:00 pm - 4:00 pm',
+    # 'Horario Sabado': '',
+    # 'Horarios Virtuales Lunes': '',
+    # 'Horarios Virtuales Martes': '',
+    # 'Horarios Virtuales Miercoles': '',
+    # 'Horarios Virtuales Jueves': '',
+    # 'Horarios Virtuales Viernes': '',
+    # 'Horarios Virtuales Sabado': ''},
+
+#DATOS EL LINK DE WS SU TELEFONO NO FUNCIONA
+#     {'Tutor': 'JAVIER MAURICIO SANCHEZ GUTIERREZ',
+#     'Habilitado/Deshabilitado': 'Yes',
+#     'Email': '',
+#     'Telefono': '',
+#     'Clases': 'Algebra para Lic, Estadistica 1, Contabilidad',
+#     'Horario Lunes': '9:20 am - 11:00 am, 2:40 pm - 4:00 pm',
+#     'Horario Martes': '9:20 am - 11:00 am, 2:40 pm - 4:00 pm',
+#     'Horario Miercoles': '9:20 am - 11:00 am, 2:40 pm - 4:00 pm',
+#     'Horario Jueves': '9:20 am - 11:00 am, 2:40 pm - 4:00 pm',
+#     'Horarios Viernes': '',
+#     'Horario Sabado': '',
+#     'Horarios Virtuales Lunes': '',
+#     'Horarios Virtuales Martes': '',
+#     'Horarios Virtuales Miercoles': '',
+#     'Horarios Virtuales Jueves': '',
+#     'Horarios Virtuales Viernes': '',
+#     'Horarios Virtuales Sabado': ''
+# }
+
+    #DATOS LISTOS PERO DICE PROVICIONAL
+#  {'Tutor': 'ISAAC MAURICIO JUAREZ BACA',
+#   'Habilitado/Deshabilitado': 'Yes',
+#   'Email': '',
+#   'Telefono': '97949526',
+#   'Clases': 'Intro al Algebra, Calculo 1, Calculo 2',
+#   'Horario Lunes': '6:40 pm - 8:00 pm',
+#   'Horario Martes': '6:40 pm - 8:00 pm',
+#   'Horario Miercoles': '6:40 pm - 8:00 pm',
+#   'Horario Jueves': '6:40 pm - 8:00 pm',
+#   'Horarios Viernes': '2:40 pm - 5:20 pm ',
+#   'Horario Sabado': '',
+#   'Horarios Virtuales Lunes': '',
+#   'Horarios Virtuales Martes': '',
+#   'Horarios Virtuales Miercoles': '',
+#   'Horarios Virtuales Jueves': '',
+#   'Horarios Virtuales Viernes': '',
+#   'Horarios Virtuales Sabado': ''},
+
+
+   
+ ]
 
 
 
+# #Plantilla
+# # DatosTutoresPayload = {'Tutor': 'FERNANDO JOSUÉ PORTILLO PEÑA',
+#     'Habilitado/Deshabilitado': 'Yes',
+#     'Email': '',
+#     'Telefono': '',
+#     'Clases': 'Algebra',
+#     'Horario Lunes': '1:20 pm - 2:40 pm',
+#     'Horario Martes': '1:20 pm - 2:40 pm',
+#     'Horario Miercoles': '1:20 pm - 2:40 pm',
+#     'Horario Jueves': '1:20 pm - 2:40 pm',
+#     'Horarios Viernes': '9:55 am - 11:15 am, 1:20 pm - 2:40 pm',
+#     'Horario Sabado': '',
+#     'Horarios Virtuales Lunes': '',
+#     'Horarios Virtuales Martes': '',
+#     'Horarios Virtuales Miercoles': '',
+#     'Horarios Virtuales Jueves': '',
+#     'Horarios Virtuales Viernes': '',
+#     'Horarios Virtuales Sabado': ''},
+
+# def parseWhatsappNumber(message):
+#     pattern = r'https://wa\.me/(\d+)\?text=(.*)'
+#     match = re.search(pattern, message)
+#     if match:
+#         number = match.group(1)
+#         return number
+
+# name = input("Ingrese el nombre del archivo de Excel (ejemplo: 'Tutorias Q1 2023'): ")
+# hoja = input("Ingrese el nombre de la hoja de Excel (ejemplo: 'Tutores'): ")
+# excel_data_df = pandas.read_excel(name + '.xlsx', sheet_name=hoja)
+# print(excel_data_df)
+# structure = {
+#     'Tutor': excel_data_df.Nombre,
+#     'Habilitado/Deshabilitado': excel_data_df['Actualizado en power apps'],
+#     'Email': len(excel_data_df.Nombre)*" ",
+#     'Telefono': excel_data_df['Enlace Whatsapp'],
+#     'Clases': excel_data_df.Clases,
+#     'Horario Lunes': excel_data_df.Lunes,
+#     'Horario Martes': excel_data_df.Martes,
+#     'Horario Miercoles': excel_data_df.Miercoles,
+#     'Horario Jueves': excel_data_df.Jueves,
+#     'Horarios Viernes': excel_data_df.Viernes,
+#     'Horario Sabado': excel_data_df['Sábado'],
+#     'Horarios Virtuales Lunes': len(excel_data_df.Nombre)*" ",
+#     'Horarios Virtuales Martes': len(excel_data_df.Nombre)*" ",
+#     'Horarios Virtuales Miercoles': len(excel_data_df.Nombre)*" ",
+#     'Horarios Virtuales Jueves': len(excel_data_df.Nombre)*" ",
+#     'Horarios Virtuales Viernes': len(excel_data_df.Nombre)*" ",
+#     'Horarios Virtuales Sabado': len(excel_data_df.Nombre)*" "
+# }
+
+# tutores = []
+
+# for i in range(len(excel_data_df.Nombre)):
+#     # skip if its a nan
+#     if structure['Clases'][i] == "" or structure['Clases'][i] == " ":
+#         print(f"El tutor {structure['Tutor'][i]} no tiene clases asignadas, omitiendo.")
+#         break
+#     tutor = {
+#         'Tutor': structure['Tutor'][i],
+#         'Habilitado/Deshabilitado': structure['Habilitado/Deshabilitado'][i],
+#         'Email': "",
+#         'Telefono': parseWhatsappNumber(structure['Telefono'][i]),
+#         'Clases': structure['Clases'][i],
+#         'Horario Lunes': structure['Horario Lunes'][i],
+#         'Horario Martes': structure['Horario Martes'][i],
+#         'Horario Miercoles': structure['Horario Miercoles'][i],
+#         'Horario Jueves': structure['Horario Jueves'][i],
+#         'Horarios Viernes': structure['Horarios Viernes'][i],
+#         'Horario Sabado': structure['Horario Sabado'][i],
+#         'Horarios Virtuales Lunes': "",
+#         'Horarios Virtuales Martes': "",
+#         'Horarios Virtuales Miercoles': "",
+#         'Horarios Virtuales Jueves': "",
+#         'Horarios Virtuales Viernes': "",
+#         'Horarios Virtuales Sabado': ""
+#     }
+#     print(f"Agregando tutor: {tutor['Tutor']} con telefono: {tutor['Telefono']}\n")
+#     tutores.append(tutor)
+
+# print(tutores)
+
+crearTutoresConRangosHorarios(DatosTutoresPayload)
 
 
-
-
-
-#Plantilla
-DatosTutoresPayload = {
-    'Tutor': 'FERNANDO JOSUÉ PORTILLO PEÑA',
-    'Habilitado/Deshabilitado': 'Yes',
-    'Email': '',
-    'Telefono': '',
-    'Clases': 'Algebra',
-    'Horario Lunes': '1:20 pm - 2:40 pm',
-    'Horario Martes': '1:20 pm - 2:40 pm',
-    'Horario Miercoles': '1:20 pm - 2:40 pm',
-    'Horario Jueves': '1:20 pm - 2:40 pm',
-    'Horarios Viernes': '9:55 am - 11:15 am, 1:20 pm - 2:40 pm',
-    'Horario Sabado': '',
-    'Horarios Virtuales Lunes': '',
-    'Horarios Virtuales Martes': '',
-    'Horarios Virtuales Miercoles': '',
-    'Horarios Virtuales Jueves': '',
-    'Horarios Virtuales Viernes': '',
-    'Horarios Virtuales Sabado': ''
-}
-
-
-
-name = input("Ingrese el nombre del archivo de Excel (ejemplo: 'Tutorias Q1 2023'): ")
-hoja = input("Ingrese el nombre de la hoja de Excel (ejemplo: 'Tutores'): ")
-excel_data_df = pandas.read_excel(name + '.xlsx', sheet_name=hoja)
-
-tutores = {
-    'Tutor': excel_data_df.Tutor,
-    'Habilitado/Deshabilitado': excel_data_df['Habilitado/Deshabilitado'],
-    'Email': excel_data_df.Email,
-    'Telefono': excel_data_df.Telefono,
-    'Clases': excel_data_df.Clases,
-    'Horario Lunes': excel_data_df.Lunes,
-    'Horario Martes': excel_data_df.Martes,
-    'Horario Miercoles': excel_data_df.Miercoles,
-    'Horario Jueves': excel_data_df.Jueves,
-    'Horarios Viernes': excel_data_df.Viernes,
-    'Horario Sabado': excel_data_df.Sabado,
-    'Horarios Virtuales Lunes': excel_data_df['Horarios Virtuales Lunes'],
-    'Horarios Virtuales Martes': excel_data_df['Horarios Virtuales Martes'],
-    'Horarios Virtuales Miercoles': excel_data_df['Horarios Virtuales Miercoles'],
-    'Horarios Virtuales Jueves': excel_data_df['Horarios Virtuales Jueves'],
-    'Horarios Virtuales Viernes': excel_data_df['Horarios Virtuales Viernes'],
-    'Horarios Virtuales Sabado': excel_data_df['Horarios Virtuales Sabado']
-}
-
-# crearTutoresConRangosHorarios(DatosTutoresPayload)
 
 
 # ==================================================================================================

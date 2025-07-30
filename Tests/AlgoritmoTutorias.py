@@ -27,7 +27,7 @@ sp_list_Tutorias = site.List('Tutorias')
 sp_list_Tutores = site.List('Tutores')
 sp_list_Aulas = site.List('Aulas')
 
-Tutoriasdata = sp_list_Tutorias.GetListItems(fields=['ID', 'Aula', 'Tipo de Tutoria', 'Contactado','Estado', 'Telefono', 'Nombre Tutor', 'Fecha de Tutoria', 'Hora Tutoria', 'Clases','Temas','Alumnos', 'TutoresRechazaron', 'HoraClasica'])
+Tutoriasdata = sp_list_Tutorias.GetListItems(fields=['ID', 'Aula', 'Tipo de Tutoria', 'Contactado','Estado', 'Telefono', 'Nombre Tutor', 'Fecha de Tutoria', 'Hora Tutoria', 'Clases','Temas','Alumnos', 'TutoresRechazaron', 'HoraClasica', 'ClaseClasica'])
 Tutoresdata = sp_list_Tutores.GetListItems(fields=['ID', 'Tutor', 'Telefono', 'TelefonoAuxiliar', 'Habilitado/Deshabilitado', 'Clases que Imparte', 'Horario Lunes', 'Horario Martes', 'Horario Miercoles', 'Horario Jueves', 'Horarios Viernes', 'Horario Sabado'])
 random.shuffle(Tutoresdata) # Mezclar lista de tutores
 Aulasdata = sp_list_Aulas.GetListItems(fields=['ID', 'IdAula ', 'Oficial'])
@@ -77,35 +77,15 @@ def asignar_tutor(tutoria):
     if ('Hora Tutoria' in tutoria):
         hora_tutoria = tutoria['Hora Tutoria']
     else:
-        classic_time_str = tutoria['HoraClasica']
-        
-        try:
-            parts = classic_time_str.strip().split()
-            
-            if len(parts) != 2:
-                print(f"Error: Formato de 'HoraClasica' incorrecto: '{classic_time_str}'. Esperado 'X am' o 'X pm'.")
-                return False 
-            print(parts)
-
-            hour_str = parts[0]
-            ampm = parts[1].lower()
-
-            start_hour_24 = int(hour_str)
-
-            if start_hour_24 == 12: 
-                end_hour_24 = 1
-                end_ampm_display = "pm" if ampm == "pm" else "am"
-            else:
-                end_hour_24 = start_hour_24 + 1
-                end_ampm_display = ampm
-
-            hora_tutoria = f"{start_hour_24}:00 {ampm} - {end_hour_24}:00 {end_ampm_display}"
-
-        except (IndexError, ValueError) as e:
-            print(f"Error al procesar 'HoraClasica' ('{classic_time_str}'). Detalles: {e}")
-            print("No se pudo determinar el rango de tiempo de la tutoría. Estableciendo a None.")
-            hora_tutoria = None 
-    clase_tutoria = tutoria['Clases']
+        hora_tutoria = tutoria['HoraClasica']
+        tutoria['Hora Tutoria'] = hora_tutoria
+    
+    clase_tutoria = None
+    if ('Clases' in tutoria):
+        clase_tutoria = tutoria['Clases']
+    else:
+        clase_tutoria = tutoria['ClaseClasica']
+        tutoria['Clases'] = clase_tutoria
 
 
     now = datetime.now()

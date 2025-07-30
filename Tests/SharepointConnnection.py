@@ -9,8 +9,6 @@ from shareplum import Office365
 
 
 class SharepointConnection:
-    def __init__(self):
-        
 
     def get_response(self, input_message):
         self.chat_history.append({"role": "user", "content": input_message})
