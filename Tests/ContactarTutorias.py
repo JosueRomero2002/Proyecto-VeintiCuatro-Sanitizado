@@ -21,7 +21,7 @@ sp_list_Tutorias = site.List('Tutorias')
 
 sp_list_Tutores = site.List('Tutores')
 sp_list_Aulas = site.List('Aulas')
-Tutoriasdata = sp_list_Tutorias.GetListItems(fields=['ID', "Aula", 'Tipo de Tutoria', 'Contactado','Estado', 'Telefono', 'Nombre Tutor', 'Tipo de Tutoria', 'Fecha de Tutoria', 'Hora Tutoria', 'Clases','Temas','Alumnos', 'Aula', 'Numero de Cuenta'])
+Tutoriasdata = sp_list_Tutorias.GetListItems(fields=['ID', "Aula", 'Tipo de Tutoria', 'Contactado','Estado', 'Telefono', 'Nombre Tutor', 'Tipo de Tutoria', 'Fecha de Tutoria', 'Hora Tutoria', 'Clases','Temas','Alumnos', 'Aula', 'Numero de Cuenta', 'HoraClasica', 'ClaseClasica'])
 Tutoresdata = sp_list_Tutores.GetListItems(fields=['ID', 'Tutor', 'Telefono', 'TelefonoAuxiliar','Número de Cuenta' ])
 Aulasdata = sp_list_Aulas.GetListItems(fields=['ID', 'IdAula ', 'Oficial'])
 
@@ -171,17 +171,25 @@ if (ContactarPendientes):
 # ➡️ Alumno: ELIAS JOSUE BONILLA MENDEZ
 # ➡️Tema: Separables y Sustitución 
 # ➡️ Tutor: ERICK EDUARDO ARITA HENRIQUEZ
-
-
-
+          
+           clase = None
+           if ('Clases' in FilteredTutoriasdata[i]):
+              clase = FilteredTutoriasdata[i]['Clases']
+           else:
+              clase = FilteredTutoriasdata[i]['ClaseClasica']
+           hora = None
+           if ('Hora Tutoria' in FilteredTutoriasdata[i]):
+              hora = FilteredTutoriasdata[i]['Hora Tutoria']
+           else:
+                hora = FilteredTutoriasdata[i]['HoraClasica']
 
 
            mensaje = "✨🐯PROPUESTA de Tutoria🐯✨"
            mensaje += "\n\n➡️ Modalidad : "+FilteredTutoriasdata[i]['Tipo de Tutoria']
            mensaje += "\n➡️ Fecha: "+FilteredTutoriasdata[i]['Fecha de Tutoria'].strftime("%Y-%m-%d %H:%M:%S")
            mensaje += "\n➡️ Día: " + FilteredTutoriasdata[i]['Fecha de Tutoria'].strftime("%A").upper()
-           mensaje += "\n➡️ Hora: "+FilteredTutoriasdata[i]['Hora Tutoria']
-           mensaje += "\n➡️ Asignatura: "+FilteredTutoriasdata[i]['Clases']
+           mensaje += "\n➡️ Hora: "+hora
+           mensaje += "\n➡️ Asignatura: "+clase
            mensaje += "\n➡️ Alumno: "+FilteredTutoriasdata[i]['Alumnos']
            mensaje += "\n➡️ Contacto: "+TelefonoAlumno
            mensaje += "\n➡️ Tema: "+FilteredTutoriasdata[i]['Temas']
@@ -514,8 +522,8 @@ if (ContactarRechazadas):
            mensaje += "\n\n➡️ Modalidad : "+FilteredTutoriasdata[i]['Tipo de Tutoria']
            mensaje += "\n➡️ Fecha: "+FilteredTutoriasdata[i]['Fecha de Tutoria'].strftime("%Y-%m-%d %H:%M:%S")
            mensaje += "\n➡️ Día: " + FilteredTutoriasdata[i]['Fecha de Tutoria'].strftime("%A").upper()
-           mensaje += "\n➡️ Hora: "+FilteredTutoriasdata[i]['Hora Tutoria']
-           mensaje += "\n➡️ Asignatura: "+FilteredTutoriasdata[i]['Clases']
+           mensaje += "\n➡️ Hora: "+hora
+           mensaje += "\n➡️ Asignatura: "+clase
            mensaje += "\n➡️ Alumno: "+FilteredTutoriasdata[i]['Alumnos']
            mensaje += "\n➡️ Contacto: "+TelefonoAlumno
            mensaje += "\n➡️ Tema: "+FilteredTutoriasdata[i]['Temas']
@@ -580,11 +588,22 @@ if (ContactarModeradorAula):
 
            print("Mensaje enviado a: ",numAux)
 
+           clase = None
+           if ('Clases' in FilteredTutoriasdata[i]):
+              clase = FilteredTutoriasdata[i]['Clases']
+           else:
+              clase = FilteredTutoriasdata[i]['ClaseClasica']
+           hora = None
+           if ('Hora Tutoria' in FilteredTutoriasdata[i]):
+              hora = FilteredTutoriasdata[i]['Hora Tutoria']
+           else:
+                hora = FilteredTutoriasdata[i]['HoraClasica']
+
            mensaje = "✨🐯Solicitud de AULA de Tutorias Unitec🐯✨"
            mensaje += "\n\n➡️ Modalidad : "+FilteredTutoriasdata[i]['Tipo de Tutoria']
            mensaje += "\n➡️ Fecha: "+FilteredTutoriasdata[i]['Fecha de Tutoria'].strftime("%Y-%m-%d %H:%M:%S")
-           mensaje += "\n➡️ Hora: "+FilteredTutoriasdata[i]['Hora Tutoria']
-           mensaje += "\n➡️ Asignatura: "+FilteredTutoriasdata[i]['Clases']
+           mensaje += "\n➡️ Hora: "+hora
+           mensaje += "\n➡️ Asignatura: "+clase
            mensaje += "\n➡️ Alumno: "+FilteredTutoriasdata[i]['Alumnos']
           #  mensaje += "\n➡️ Numero de Cuenta: "+FilteredTutoriasdata[i]['Numero de Cuenta']
            mensaje += "\n➡️ Contacto: "+TelefonoAlumno
@@ -683,13 +702,23 @@ if (ContactarReagendadas):
            if ( FilteredTutoriasdata[i]['Tipo de Tutoria'] == "Presencial") :
                 AulaTutoria =  FilteredTutoriasdata[i]['Aula']
 
+           clase = None
+           if ('Clases' in FilteredTutoriasdata[i]):
+              clase = FilteredTutoriasdata[i]['Clases']
+           else:
+              clase = FilteredTutoriasdata[i]['ClaseClasica']
+           hora = None
+           if ('Hora Tutoria' in FilteredTutoriasdata[i]):
+              hora = FilteredTutoriasdata[i]['Hora Tutoria']
+           else:
+                hora = FilteredTutoriasdata[i]['HoraClasica']
 
            mensaje = "📅🔄 *Solicitud de Reagendamiento de Tutoría* 🔄📅"
            mensaje += "\n\n➡️ Modalidad: " + FilteredTutoriasdata[i]['Tipo de Tutoria']
            mensaje += "\n➡️ Fecha: " + FilteredTutoriasdata[i]['Fecha de Tutoria'].strftime("%Y-%m-%d %H:%M:%S")
            mensaje += "\n➡️ Día: " + FilteredTutoriasdata[i]['Fecha de Tutoria'].strftime("%A").upper()
-           mensaje += "\n➡️ Hora: " + FilteredTutoriasdata[i]['Hora Tutoria']
-           mensaje += "\n➡️ Asignatura: " + FilteredTutoriasdata[i]['Clases']
+           mensaje += "\n➡️ Hora: " + hora
+           mensaje += "\n➡️ Asignatura: " + clase
            mensaje += "\n➡️ Alumno: " + FilteredTutoriasdata[i]['Alumnos']
            mensaje += "\n➡️ Contacto: " + TelefonoAlumno
            mensaje += "\n➡️ Tema: " + FilteredTutoriasdata[i]['Temas']
@@ -788,13 +817,24 @@ if (ContactarModeradorTutor):
           #  pywhatkit.sendwhatmsg_instantly("+50489886363", mensaje, 25, False, 4)
           #  update_data = [{'ID': FilteredTutoriasdata[i]['ID'], 'Contactado': 'Yes'}]
           #  sp_list_Tutorias.UpdateListItems(data=update_data, kind='Update')
+           clase = None
+           if ('Clases' in FilteredTutoriasdata[i]):
+              clase = FilteredTutoriasdata[i]['Clases']
+           else:
+              clase = FilteredTutoriasdata[i]['ClaseClasica']
+           hora = None
+           if ('Hora Tutoria' in FilteredTutoriasdata[i]):
+              hora = FilteredTutoriasdata[i]['Hora Tutoria']
+           else:
+                hora = FilteredTutoriasdata[i]['HoraClasica']
+
            mensaje = "🐯Tutorias Unitec🐯 \n📕📕📕📕📕📕📕📕📕📕📕📕📕📕"
            mensaje += "\n\nEsperamos que estés bien. Queríamos informarte que, lamentablemente, *no pudimos coordinar tu solicitud de tutoría porque no había disponibilidad para ese día u horario 📅.* Esto sucede debido a la alta demanda de tutorías."
            mensaje += "\n\n➡️ Modalidad : "+FilteredTutoriasdata[i]['Tipo de Tutoria']
            mensaje += "\n➡️ Fecha: "+FilteredTutoriasdata[i]['Fecha de Tutoria'].strftime("%Y-%m-%d %H:%M:%S")
            mensaje += "\n➡️ Día: " + FilteredTutoriasdata[i]['Fecha de Tutoria'].strftime("%A").upper()
-           mensaje += "\n➡️ Hora: "+FilteredTutoriasdata[i]['Hora Tutoria']
-           mensaje += "\n➡️ Asignatura: "+FilteredTutoriasdata[i]['Clases']
+           mensaje += "\n➡️ Hora: "+hora
+           mensaje += "\n➡️ Asignatura: "+clase
            mensaje += "\n➡️ Alumno: "+FilteredTutoriasdata[i]['Alumnos']
            mensaje += "\n➡️ Contacto: "+TelefonoAlumno
            mensaje += "\n➡️ Tema: "+FilteredTutoriasdata[i]['Temas']
@@ -863,14 +903,24 @@ if (ContactarCanceladas):
     
 
            print("Mensaje enviado a: ",numAux)
+           clase = None
+           if ('Clases' in FilteredTutoriasdata[i]):
+              clase = FilteredTutoriasdata[i]['Clases']
+           else:
+              clase = FilteredTutoriasdata[i]['ClaseClasica']
+           hora = None
+           if ('Hora Tutoria' in FilteredTutoriasdata[i]):
+              hora = FilteredTutoriasdata[i]['Hora Tutoria']
+           else:
+                hora = FilteredTutoriasdata[i]['HoraClasica']
 
            mensaje = "🐯Tutorias Unitec🐯"
            mensaje += "\n\nSaludos de Tutorias Unitec, espero que se encuentre bien. Le escribo por la tutoria que habia solicitado, ."
            mensaje += "\n\n➡️ Modalidad : "+FilteredTutoriasdata[i]['Tipo de Tutoria']
            mensaje += "\n➡️ Fecha: "+FilteredTutoriasdata[i]['Fecha de Tutoria'].strftime("%Y-%m-%d %H:%M:%S")
            mensaje += "\n➡️ Día: " + FilteredTutoriasdata[i]['Fecha de Tutoria'].strftime("%A").upper()
-           mensaje += "\n➡️ Hora: "+FilteredTutoriasdata[i]['Hora Tutoria']
-           mensaje += "\n➡️ Asignatura: "+FilteredTutoriasdata[i]['Clases']
+           mensaje += "\n➡️ Hora: "+hora
+           mensaje += "\n➡️ Asignatura: "+clase
            mensaje += "\n➡️ Alumno: "+FilteredTutoriasdata[i]['Alumnos']
            mensaje += "\n➡️ Contacto: "+TelefonoAlumno
            mensaje += "\n➡️ Tema: "+FilteredTutoriasdata[i]['Temas']
