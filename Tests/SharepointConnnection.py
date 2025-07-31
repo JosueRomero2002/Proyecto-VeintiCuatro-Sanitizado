@@ -6,6 +6,7 @@ import keyboard as k
 
 from shareplum import Site
 from shareplum import Office365
+import openai
 
 
 class SharepointConnection:
@@ -13,7 +14,9 @@ class SharepointConnection:
     def get_response(self, input_message):
         self.chat_history.append({"role": "user", "content": input_message})
 
-        messages = [{"role": "system", "content": "dame una respuesta de al menos 2 lineas"}]
+        messages = [
+            {"role": "system", "content": "dame una respuesta de al menos 2 lineas"}
+        ]
         messages.extend(self.chat_history)
 
         # response = openai.ChatCompletion.create(
@@ -29,9 +32,8 @@ class SharepointConnection:
             max_tokens=self.max_tokens,
         )
 
-
         respuesta = response.choices[0].message.content
-        
+
         self.chat_history.append({"role": "assistant", "content": respuesta})
 
         return respuesta

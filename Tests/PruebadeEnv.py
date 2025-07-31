@@ -5,8 +5,8 @@ import os
 load_dotenv()
 
 # Ahora puedes acceder a las variables de entorno
-secret_key = os.getenv('SECRET_KEY')
-database_url = os.getenv('DATABASE_URL')
+secret_key = os.getenv("SECRET_KEY")
+database_url = os.getenv("DATABASE_URL")
 
-print(f'Secret Key: {secret_key}')
-print(f'Database URL: {database_url}')
+print(f"Secret Key: {secret_key}")
+print(f"Database URL: {database_url}")

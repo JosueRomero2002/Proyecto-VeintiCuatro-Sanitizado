@@ -7,17 +7,18 @@ from Unidad_Accion.Accion_NoInvasiva.Toasts import ToastifyWindows
 from shareplum import Site
 from shareplum import Office365
 from shareplum.site import Version
-from APIs.autoGPT import AutoGPT  # Importamos la clase AutoGPT desde el archivo que contenga esta clase
+from APIs.autoGPT import (
+    AutoGPT,
+)  # Importamos la clase AutoGPT desde el archivo que contenga esta clase
 
 
 import os
 from dotenv import load_dotenv
 
-load_dotenv()  
+load_dotenv()
 
-userSh = os.getenv('SHAREPOINT_USER')
-passSh = os.getenv('SHAREPOINT_PASS')
-
+userSh = os.getenv("SHAREPOINT_USER")
+passSh = os.getenv("SHAREPOINT_PASS")
 
 
 # Inicializamos Toastify, reconocimiento de voz y la clase AutoGPT
@@ -29,38 +30,46 @@ AutoGPT = AutoGPT()
 stop_response = False
 
 
-
-
-
-
-
-
-
 voice_mode_active = False  # Controla si el modo de voz está activo o en modo silencioso
 voice_thread = None  # Variable para el hilo de voz
 lista_guardada = None  # Para monitoreo de cambios en la lista de SharePoint
 execution_lock = threading.Lock()  # Lock para controlar la ejecución simultánea
 
 
-
-
-
-
 # Función para obtener los datos de la lista de SharePoint
 def obtener_datos_lista():
-    authcookie = Office365('https://unitechn.sharepoint.com', username= userSh, password= passSh).GetCookies()
-    site = Site('https://unitechn.sharepoint.com/sites/TutoriasUNITEC2/', authcookie=authcookie)
-    lista = site.List('Tutorias')  # Nombre de la lista en SharePoint
-    return lista.GetListItems(fields=['ID', 'Aula', 'Tipo de Tutoria', 'Contactado','Estado', 'Telefono', 'Nombre Tutor', 'Fecha de Tutoria', 'Hora Tutoria', 'Clases','Temas','Alumnos', 'TutoresRechazaron'])
+    authcookie = Office365(
+        "https://unitechn.sharepoint.com", username=userSh, password=passSh
+    ).GetCookies()
+    site = Site(
+        "https://unitechn.sharepoint.com/sites/TutoriasUNITEC2/", authcookie=authcookie
+    )
+    lista = site.List("Tutorias")  # Nombre de la lista en SharePoint
+    return lista.GetListItems(
+        fields=[
+            "ID",
+            "Aula",
+            "Tipo de Tutoria",
+            "Contactado",
+            "Estado",
+            "Telefono",
+            "Nombre Tutor",
+            "Fecha de Tutoria",
+            "Hora Tutoria",
+            "Clases",
+            "Temas",
+            "Alumnos",
+            "TutoresRechazaron",
+        ]
+    )
+
 
 # Monitorear cambios en la lista de SharePoint en un hilo separado
 def detectar_cambios():
-    
+
     global lista_guardada
     lista_guardada = obtener_datos_lista()  # Guardar los datos iniciales de la lista
     while True:
-        
-
 
         lista_actual = obtener_datos_lista()
         if lista_actual != lista_guardada:
@@ -68,24 +77,29 @@ def detectar_cambios():
             lanzar_notificacion()
         time.sleep(10)  # Verificar cada 10 segundos
 
+
 # Función que maneja la notificación y escucha si se permite la acción
 def lanzar_notificacion():
     ejecutar_algoritmo_tutorias()
-    ToastifyWindows.sendMessagetoToast("Se detectó un cambio en la lista de SharePoint. ¿Permitir acción?")
+    ToastifyWindows.sendMessagetoToast(
+        "Se detectó un cambio en la lista de SharePoint. ¿Permitir acción?"
+    )
     # escuchar_respuesta()
+
 
 # Función que maneja la respuesta de la IA
 def process_response(prompt):
     global stop_response
     response = "Not Yet Implemented"
     # response = AutoGPT.get_response(prompt)
-    for chunk in response.split('. '):  # Dividimos la respuesta en trozos
+    for chunk in response.split(". "):  # Dividimos la respuesta en trozos
         if stop_response:
             print("Respuesta interrumpida.")
             ToastifyWindows.sendMessagetoToast("Respuesta interrumpida.")
             break
-        print(chunk + '.')
+        print(chunk + ".")
         time.sleep(2)
+
 
 # Función para escuchar voz y enviar preguntas
 def listen_to_voice():
@@ -100,7 +114,7 @@ def listen_to_voice():
             audio = r.listen(source)
 
         try:
-            text = r.recognize_google(audio, language='es-ES')
+            text = r.recognize_google(audio, language="es-ES")
             print("Voz detectada: " + text)
 
             if text.lower() == "permitir":
@@ -113,10 +127,9 @@ def listen_to_voice():
         except sr.RequestError as e:
             print(f"Error en el servicio de reconocimiento de voz: {e}")
 
+
 # Función para manejar entradas por consola
 def listen_to_console():
-
-
 
     global stop_response, voice_mode_active, voice_thread
 
@@ -142,34 +155,45 @@ def listen_to_console():
                 print("El modo de voz ya está activado.")
         else:
             stop_response = False
-            response_thread = threading.Thread(target=process_response, args=(user_input,))
+            response_thread = threading.Thread(
+                target=process_response, args=(user_input,)
+            )
             response_thread.start()
+
 
 # Función para ejecutar AlgoritmoTutorias.py y luego ContactarTutorias.py
 def ejecutar_contactar_tutorias():
-    ruta_tests = os.path.join(os.path.dirname(__file__), 'Tests')
+    ruta_tests = os.path.join(os.path.dirname(__file__), "Tests")
 
-    with execution_lock:  # Bloquea para que nadie más pueda ejecutar mientras esto está corriendo
+    with (
+        execution_lock
+    ):  # Bloquea para que nadie más pueda ejecutar mientras esto está corriendo
         print("Ejecutando ContactarTutorias.py...")
         subprocess.run(["python", os.path.join(ruta_tests, "ContactarTutorias.py")])
 
-def ejecutar_algoritmo_tutorias():
-    ruta_tests = os.path.join(os.path.dirname(__file__), 'Tests')
 
-    with execution_lock:  # Bloquea para que nadie más pueda ejecutar mientras esto está corriendo
+def ejecutar_algoritmo_tutorias():
+    ruta_tests = os.path.join(os.path.dirname(__file__), "Tests")
+
+    with (
+        execution_lock
+    ):  # Bloquea para que nadie más pueda ejecutar mientras esto está corriendo
         print("Ejecutando AlgoritmoTutorias.py...")
-        subprocess.run(["python", os.path.join(ruta_tests, "AlgoritmoTutorias.py")], check=True)
-     
+        subprocess.run(
+            ["python", os.path.join(ruta_tests, "AlgoritmoTutorias.py")], check=True
+        )
+
+
 # Función para manejar interrupciones mediante F12
 def on_key_event(event):
     global stop_response
-    if event.name == 'f12':  # Usar F12 como trigger
+    if event.name == "f12":  # Usar F12 como trigger
         stop_response = True
         print("Interrupción por tecla F12.")
 
+
 # Registrar el listener para la tecla F12
 keyboard.on_press(on_key_event)
-
 
 
 # Función principal que gestiona la ejecución de hilos
@@ -193,10 +217,9 @@ def main():
     voice_thread.join()
     console_thread.join()
 
+
 # Iniciar la ejecución
 main()
-
-
 
 
 # import speech_recognition as sr
@@ -324,8 +347,6 @@ main()
 # main()
 
 
-
-
 # import speech_recognition as sr
 # import threading
 # import time
@@ -387,8 +408,6 @@ main()
 # def listen_to_console():
 #     global stop_response
 #     while True:
-
-
 
 
 #         user_input = input("Tú (Texto): ")
@@ -471,7 +490,7 @@ main()
 #         with sr.Microphone() as source:
 #             print("Di algo!")
 #             audio = r.listen(source)
-        
+
 #         # Transcribir audio a texto
 #         try:
 #             text = r.recognize_google(audio, language='es-ES')
@@ -508,11 +527,7 @@ main()
 # listen_and_respond()
 
 
-
-
-
 # ========================================================================================
-
 
 
 # import speech_recognition as sr
@@ -529,15 +544,12 @@ main()
 # ToastifyWindows = ToastifyWindows()
 
 
-
 # def on_key_event(event):
 #     if event.name == 'f12':  # Usar F12 como tecla trigger
 #         Output = ToastifyWindows.inputToast("Se presionó la tecla F12")
-        
+
 #         while "close" != str(Output['message']):
 #               ToastifyWindows.inputToast(AutoGPT.get_response(Output['message']))
-        
-        
 
 
 # # Registrar el keylistener
@@ -548,11 +560,6 @@ main()
 #     with sr.Microphone() as source:
 #         print("Di algo!")
 #         audio = r.listen(source)
-
-    
-    
-
-
 
 
 #     #Transcribir el audio a texto
@@ -575,88 +582,7 @@ main()
 #             ToastifyWindows.toastAndReproduceMessage(AutoGPT.get_response(text))
 
 
-
-
 #     except sr.UnknownValueError:
 #         print("No se pudo entender lo que dijiste")
 #     except sr.RequestError as e:
 #         print("No se pudo conectar con el servicio de reconocimiento de voz: {0}".format(e))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

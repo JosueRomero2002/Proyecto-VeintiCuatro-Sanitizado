@@ -65,8 +65,7 @@ from win11toast import toast
 
 text = "Hello, World!"
 
-result = toast('Hello', 'Type anything', input='reply', button='Send')
+result = toast("Hello", "Type anything", input="reply", button="Send")
 
 
-toast(result['user_input']['reply'])
-
+toast(result["user_input"]["reply"])

@@ -2,10 +2,11 @@ import openai
 from dotenv import load_dotenv
 import os
 
+
 class AutoGPT:
     def __init__(self):
-        load_dotenv()  
-        ApiKey = os.getenv('AUTOGPT_API_KEY')
+        load_dotenv()
+        ApiKey = os.getenv("AUTOGPT_API_KEY")
         openai.api_key = ApiKey
         self.model = "gpt-4-turbo-2024-04-09"
         self.temperature = 0.8
@@ -15,7 +16,9 @@ class AutoGPT:
     def get_response(self, input_message):
         self.chat_history.append({"role": "user", "content": input_message})
 
-        messages = [{"role": "system", "content": "dame una respuesta de al menos 2 lineas"}]
+        messages = [
+            {"role": "system", "content": "dame una respuesta de al menos 2 lineas"}
+        ]
         messages.extend(self.chat_history)
 
         # response = openai.ChatCompletion.create(
@@ -31,9 +34,8 @@ class AutoGPT:
             max_tokens=self.max_tokens,
         )
 
-
         respuesta = response.choices[0].message.content
-        
+
         self.chat_history.append({"role": "assistant", "content": respuesta})
 
         return respuesta
