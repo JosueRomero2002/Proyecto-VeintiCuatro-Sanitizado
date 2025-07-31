@@ -282,7 +282,7 @@ def generar_solicitudes(
                     "Hora Tutoria": hora,
                     "Clases": clase,
                     "Temas": temas,
-                    "Alumnos": alumno,
+                    "Numero de Cuenta": alumno,
                 }
             )
         fecha_actual += timedelta(days=1)
@@ -321,7 +321,8 @@ def generarTutoriaPAE():
 
     clase_seleccionada = available_classes[clase_index]
 
-    alumno = input("Ingrese nombre del alumno: ").upper()
+    alumno = input("Ingrese el numero de cuenta del alumno: ")
+
     telefono = input("Ingrese telefono del alumno (########): ")
     hora = input("Ingrese hora de la tutoria (ejemplo: 11:00 am - 12:00 pm): ")
     dias = (
@@ -382,7 +383,7 @@ def generarTutoriaManual():
 
     clase_seleccionada = available_classes[clase_index]
 
-    alumno = input("Ingrese nombre del alumno: ").upper()
+    alumno = input("Ingrese el numero de cuenta del alumno: ")
     telefono = input("Ingrese telefono del alumno (########): ")
     hora = input("Ingrese hora de la tutoria (ejemplo: 11:00 am - 12:00 pm): ")
     fecha = input("Ingrese fecha de la tutoria (YYYY-MM-DD): ")
@@ -398,7 +399,7 @@ def generarTutoriaManual():
         "Hora Tutoria": hora,
         "Clases": clase_seleccionada,
         "Temas": temas,
-        "Alumnos": alumno,
+        "Numero de Cuenta": alumno,
     }
     SolicitarTutoria([tutoria])
 
