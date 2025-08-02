@@ -313,6 +313,9 @@ def crearTutoresConRangosHorarios(DatosTutores):
         return
 
     for tutor in DatosTutores:
+        if tutor.get("agregado", "si").lower() == "si":
+            print(f"Tutor {tutor['Tutor']} ya ha sido agregado, omitiendo.")
+            continue
         # Manejar clases
         clases_tutor = tutor.get("Clases", "").split(", ")
         clases_formato = generarStringClases(clases_tutor, clases_dict)
@@ -402,14 +405,6 @@ def crearTutoresConRangosHorarios(DatosTutores):
             )
         except Exception as e:
             print(f"Error al agregar al tutor {tutor['Tutor']}: {e}")
-
-
-def parseWhatsappNumber(message):
-    pattern = r"https://wa\.me/(\d+)\?text=(.*)"
-    match = re.search(pattern, message)
-    if match:
-        number = match.group(1)
-        return number
 
 
 #Menu para agregar tutores

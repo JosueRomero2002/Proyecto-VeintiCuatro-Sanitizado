@@ -1,6 +1,7 @@
 {
   "DatosTutoresPayload": [
     {
+      "agregado": "si",
       "Tutor": "ERICK EDUARDO ARITA HENRIQUEZ",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -21,6 +22,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "RONALD JOSEP PERDOMO MENDOZA",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -41,6 +43,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "KENNETH DANIEL REYES REYES",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -61,6 +64,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "ASHLY GISSELE MARTINEZ GRANADOS",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -81,6 +85,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "FARES ISAAC ENAMORADO GALEANO",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -101,6 +106,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "JOSUE ARTURO DEL VALLE ZEPEDA",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -121,6 +127,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "VALERIA ESTEFANIA SOLORZANO SUAZO",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -141,6 +148,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "MEYBELIN SARAI BONILLA RIVERA",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -161,6 +169,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "FERNANDO DAVID SOSA FLORES",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -181,6 +190,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "ALEX ROBERTO HERNANDEZ GARCIA",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -201,6 +211,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "DANIEL ALEXANDER HERNANDEZ ESCOTO",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -221,6 +232,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "DIEGO ANDRES RIVERA VALLE",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -241,6 +253,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "ANTHONY EMANUEL FUNEZ GUERRA",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -261,6 +274,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "IAN ROMAN BELTRAND PADILLA",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -281,6 +295,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "DANILO ENRIQUE ALVARADO HERNANDEZ",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -301,6 +316,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "FERNANDO JOSUÉ PORTILLO PEÑA",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -321,6 +337,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "JABES DANIEL LOPEZ ROMERO",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -341,6 +358,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "JONATHAN ANDRES UMANA LOPEZ",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -361,6 +379,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "JOSUE MANUEL GAVIDIA GONZALEZ",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -381,6 +400,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "OSVALDO ANDRES DACOSTA FERNANDEZ",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -401,6 +421,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "CARLOS MARCELO ALVARADO RIVAS",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -421,6 +442,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "CARLOS ENRIQUE LOPEZ ARITA",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -441,6 +463,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "JENNIFER LAGOS HERNÁNDEZ",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "89206905",
@@ -462,6 +485,7 @@
   ],
   "DatosTutoresPayloadProvisional": [
     {
+      "agregado": "si",
       "Tutor": "JUAN SEBASTIAN MELENDEZ CRUZ",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -483,11 +507,12 @@
   ],
   "DatosTutoresPayloadPAE": [
     {
+      "agregado": "no",
       "Tutor": "JAVIER MAURICIO SANCHEZ GUTIERREZ",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
       "Telefono": "95889108",
-      "Clases": "Algebra para Lic, Estadistica 1, Contabilidad",
+      "Clases": "Algebra para LIC, Estadistica Matematica 1, Contabilidad, Frances 1, Frances 2, Frances 3, Intro Al Algebra, ",
       "Horario Lunes": "9:20 am - 11:00 am, 2:40 pm - 4:00 pm",
       "Horario Martes": "9:20 am - 11:00 am, 2:40 pm - 4:00 pm",
       "Horario Miercoles": "9:20 am - 11:00 am, 2:40 pm - 4:00 pm",
@@ -502,6 +527,7 @@
       "Horarios Virtuales Sabado": ""
     },
     {
+      "agregado": "si",
       "Tutor": "ALEX RICARDO REYES GUTIERREZ",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -522,6 +548,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "ANA VALERIA FLORES GALINDO",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -542,6 +569,7 @@
     },
 
     {
+      "agregado": "si",
       "Tutor": "Yasin Hernandez",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",
@@ -561,6 +589,7 @@
       "Horarios Virtuales Sabado": ""
     },
     {
+      "agregado": "si",
       "Tutor": "ISAAC MAURICIO JUAREZ BACA",
       "Habilitado/Deshabilitado": "Yes",
       "Email": "",

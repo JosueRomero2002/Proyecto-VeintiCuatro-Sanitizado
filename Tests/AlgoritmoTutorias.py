@@ -382,7 +382,7 @@ def generarTutoriaManual():
 
     clase_seleccionada = available_classes[clase_index]
 
-    alumno = input("Ingrese nombre del alumno: ").upper()
+    alumno = input("Ingrese el numero de cuenta del alumno: ")
     telefono = input("Ingrese telefono del alumno (########): ")
     hora = input("Ingrese hora de la tutoria (ejemplo: 11:00 am - 12:00 pm): ")
     fecha = input("Ingrese fecha de la tutoria (YYYY-MM-DD): ")
@@ -398,7 +398,7 @@ def generarTutoriaManual():
         "Hora Tutoria": hora,
         "Clases": clase_seleccionada,
         "Temas": temas,
-        "Alumnos": alumno,
+        "Numero de Cuenta": alumno,
     }
     SolicitarTutoria([tutoria])
 
@@ -438,10 +438,11 @@ def atenderTutorias():
 
                 TutoriasPendientesRechazadas.append(tutoria)
                 print(
-                    f"Tutoria ID {tutoria['ID']} asignada con {tutoria['Nombre Tutor']}"
+                    f"Tutoria ID {tutoria['ID']} de clase {tutoria['Clases']} asignada con {tutoria['Nombre Tutor']}"
                 )
             else:
                 update_data = [
+                    
                     {"ID": tutoria["ID"], "Estado": "Sin Tutor", "Contactado": "No"}
                 ]
                 sp_list_Tutorias.UpdateListItems(data=update_data, kind="Update")
@@ -483,6 +484,47 @@ def atenderTutorias():
                 print(f"(-)  No se encontró aula")
 
 
+def buscarTutorDisponible(tutor_viejo):
+    for tutor in Tutoresdata:
+        if (
+            tutor["Habilitado/Deshabilitado"] == "Yes"
+            and tutor["Telefono"] != ""
+            and tutor["TelefonoAuxiliar"] != ""
+            and tutor["Nombre Tutor"] != tutor_viejo
+        ):
+            return tutor        
+    return None
+
+
+def asignarTutorATutoria(tutoriasPorActualizar):
+    for tutoria, tutor_asignado in tutoriasPorActualizar:
+        update_data = [
+            {
+                "ID": tutoria["ID"],
+                "Nombre Tutor": tutor_asignado["Nombre Tutor"],
+                "Tutor": tutor_asignado["Tutor"],
+                "Estado": "Pendiente",
+                "Contactado": "No",
+            }
+        ]
+        sp_list_Tutorias.UpdateListItems(data=update_data, kind="Update")
+
+
+def agendarConOtroTutor():
+    tutoriasPorActualizar = []
+    now = datetime.now()
+
+    for tutoria in Tutoriasdata:
+        if (tutoria["Estado"] == "Agendar Otro Tutor" and tutoria["Fecha de Tutoria"] < now) :
+            print(f"Agendando tutoría ID {tutoria['ID']} con otro tutor...")
+            tutor_asignado = buscarTutorDisponible(tutoria['Nombre Tutor'])
+            if tutor_asignado:
+                tutoriasPorActualizar.append((tutoria, tutor_asignado))
+            else:
+                print(f"No se encontró un tutor disponible para la tutoría ID {tutoria['ID']}")
+    asignarTutorATutoria(tutoriasPorActualizar)
+
+
 def menuOpciones():
     print("Bienvenido al menú de agregación de tutorías.")
     while True:
@@ -507,5 +549,3 @@ def menuOpciones():
 
 
 menuOpciones()
-# DEJE un error a proposito, no todos los nombres son unicos Tutor Asignado podria dar problemas en un futuro, lo mejor era usar el email
-# pero no me pagan lo suficiente como para hacerlo bien asi que lo dejo asi
