@@ -483,6 +483,16 @@ def atenderTutorias():
                 ]
                 sp_list_Tutorias.UpdateListItems(data=update_data, kind="Update")
                 print(f"(-)  No se encontró aula")
+        elif tutoria["Estado"] == "Agendar Otro Tutor":
+            if tutoria["Fecha de Tutoria"] < datetime.now():
+                print(
+                    f"(-)  Tutoría ID {tutoria['ID']} con fecha {tutoria['Fecha de Tutoria']} ya pasó, se agendará con otro tutor."
+                )
+                agendarConOtroTutor()
+            else:
+                print(
+                    f"(-)  Tutoría ID {tutoria['ID']} aún no ha pasado, no se puede agendar con otro tutor."
+                )
 
 
 def buscarTutorDisponible(tutor_viejo):
@@ -490,8 +500,7 @@ def buscarTutorDisponible(tutor_viejo):
         if (
             tutor["Habilitado/Deshabilitado"] == "Yes"
             and tutor["Telefono"] != ""
-            and tutor["TelefonoAuxiliar"] != ""
-            and tutor["Nombre Tutor"] != tutor_viejo
+            and tutor["Tutor"] != tutor_viejo
         ):
             return tutor        
     return None
@@ -502,8 +511,7 @@ def asignarTutorATutoria(tutoriasPorActualizar):
         update_data = [
             {
                 "ID": tutoria["ID"],
-                "Nombre Tutor": tutor_asignado["Nombre Tutor"],
-                "Tutor": tutor_asignado["Tutor"],
+                "Nombre Tutor": tutor_asignado["Tutor"],
                 "Estado": "Pendiente",
                 "Contactado": "No",
             }
@@ -517,7 +525,6 @@ def agendarConOtroTutor():
 
     for tutoria in Tutoriasdata:
         if (tutoria["Estado"] == "Agendar Otro Tutor" and tutoria["Fecha de Tutoria"] < now) :
-            print(f"Agendando tutoría ID {tutoria['ID']} con otro tutor...")
             tutor_asignado = buscarTutorDisponible(tutoria['Nombre Tutor'])
             if tutor_asignado:
                 tutoriasPorActualizar.append((tutoria, tutor_asignado))

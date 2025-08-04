@@ -87,7 +87,9 @@ def contactarPendientes():
     for i in range(0, size):
         if (
             FilteredTutoriasdata[i]["Estado"]
-            and FilteredTutoriasdata[i]["Estado"] == "Pendiente"
+            and FilteredTutoriasdata[i]["Estado"] 
+            
+            == "Pendiente"
             and FilteredTutoriasdata[i]["Contactado"] == "No"
         ):
             TelefonoTutor = ""
