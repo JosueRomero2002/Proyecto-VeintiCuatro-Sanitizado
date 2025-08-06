@@ -218,11 +218,11 @@ def contactarCoordinadas():
             mensaje += "\n\nVer Mis Tutorias: https://heylink.me/josue546/"
 
             autoGuiSkip()
-            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 25, False, 4)
+            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 25, True, 4)
 
             autoGuiSkip()
             numAux = "+504" + TelefonoAlumno
-            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 15, False, 4)
+            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 15, True, 4)
             update_data = [{"ID": FilteredTutoriasdata[i]["ID"], "Contactado": "Yes"}]
             sp_list_Tutorias.UpdateListItems(data=update_data, kind="Update")
 
@@ -276,12 +276,12 @@ def contactarCoordinadas():
             mensaje += "\n\nVer Mis Tutorias: https://heylink.me/josue546/"
 
             autoGuiSkip()
-            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 25, False, 4)
+            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 25, True, 4)
             print("Mensaje enviado a: ", numAux)
 
             numAux = "+504" + TelefonoAlumno
             autoGuiSkip()
-            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 15, False, 4)
+            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 15, True, 4)
             print("Mensaje enviado a: ", numAux)
             update_data = [{"ID": FilteredTutoriasdata[i]["ID"], "Contactado": "Yes"}]
             sp_list_Tutorias.UpdateListItems(data=update_data, kind="Update")
@@ -334,7 +334,7 @@ def contactarRechazadas():
             mensaje += "\nTambien puedes responder a este mensaje con que otro horario en otro dia podrias recibir la tutoria"
 
             autoGuiSkip()
-            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 25, False, 4)
+            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 25, True, 4)
             print("Mensaje enviado a: ", numAux)
             update_data = [
                 {
@@ -383,7 +383,7 @@ def contactarModeradorAula():
             mensaje += "\n➡️ Tutor: " + FilteredTutoriasdata[i]["Nombre Tutor"]
 
             autoGuiSkip()
-            pywhatkit.sendwhatmsg_instantly("+50489886363", mensaje, 25, False, 4)
+            pywhatkit.sendwhatmsg_instantly("+50489886363", mensaje, 25, True, 4)
             print("Mensaje enviado a: ", numAux)
             update_data = [{"ID": FilteredTutoriasdata[i]["ID"], "Contactado": "Yes"}]
             sp_list_Tutorias.UpdateListItems(data=update_data, kind="Update")
@@ -466,12 +466,12 @@ def contactarReagendadas():
             mensaje += "\n\n📌 Ver Mis Tutorías: https://heylink.me/josue546/"
 
             autoGuiSkip()
-            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 25, False, 4)
+            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 25, True, 4)
             print("Mensaje enviado a: ", numAux)
 
             numAux = "+504" + TelefonoAlumno
             autoGuiSkip()
-            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 15, False, 4)
+            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 15, True, 4)
             print("Mensaje enviado a: ", numAux)
             update_data = [{"ID": FilteredTutoriasdata[i]["ID"], "Contactado": "Yes"}]
             sp_list_Tutorias.UpdateListItems(data=update_data, kind="Update")
@@ -517,7 +517,7 @@ def contactarSinTutor():
             mensaje += "\nTambien puedes responder a este mensaje con que otro horario en otro dia podrias recibir la tutoria\n📕📕📕📕📕📕📕📕📕📕📕📕📕📕"
 
             autoGuiSkip()
-            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 25, False, 4)
+            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 25, True, 4)
             print("Mensaje enviado a: ", numAux)
             update_data = [
                 {
@@ -575,7 +575,7 @@ def contactarCanceladas():
             mensaje += "\nPrefiere ya no recibir la tutoria => 👎"
             mensaje += "\nTambien puedes responder a este mensaje con que otro horario en otro dia podrias recibir la tutoria"
 
-            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 25, False, 4)
+            pywhatkit.sendwhatmsg_instantly(numAux, mensaje, 25, True, 4)
             print("Mensaje enviado a: ", numAux)
             autoGuiSkip()
             update_data = [
