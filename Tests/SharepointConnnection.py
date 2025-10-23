@@ -4,19 +4,22 @@ import time
 import pyautogui
 import keyboard as k
 
-from shareplum import Site
-from shareplum import Office365
-import openai
+import os
+import sys
+
+# Add parent directory to path to import SharePointInteractiveAuth
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from Unidad_Accion.SharePointInteractiveAuth import SharePointInteractiveAuth
 
 
 class SharepointConnection:
+    def __init__(self):
+        self.chat_history = []
 
     def get_response(self, input_message):
         self.chat_history.append({"role": "user", "content": input_message})
 
-        messages = [
-            {"role": "system", "content": "dame una respuesta de al menos 2 lineas"}
-        ]
+        messages = [{"role": "system", "content": "dame una respuesta de al menos 2 lineas"}]
         messages.extend(self.chat_history)
 
         # response = openai.ChatCompletion.create(
@@ -32,8 +35,9 @@ class SharepointConnection:
             max_tokens=self.max_tokens,
         )
 
-        respuesta = response.choices[0].message.content
 
+        respuesta = response.choices[0].message.content
+        
         self.chat_history.append({"role": "assistant", "content": respuesta})
 
         return respuesta
