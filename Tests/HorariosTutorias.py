@@ -3,26 +3,28 @@ from datetime import datetime, timedelta
 import time
 import pyautogui
 import keyboard as k
-from shareplum import Site
-from shareplum import Office365
 import random
 import difflib
+import os
+import sys
 
-# Autenticación en SharePoint
-authcookie = Office365('https://unitechn.sharepoint.com', username='', password='').GetCookies()
+# Add parent directory to path to import SharePointInteractiveAuth
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from Unidad_Accion.SharePointInteractiveAuth import SharePointInteractiveAuth
 
-site = Site('https://unitechn.sharepoint.com/sites/TutoriasUNITEC2/', authcookie=authcookie)
+# Autenticación interactiva con SharePoint
+print("Iniciando autenticación interactiva con SharePoint...")
+auth = SharePointInteractiveAuth()
+if not auth.authenticate_interactive():
+    raise Exception("No se pudo autenticar con SharePoint")
 
+print("Autenticación exitosa, obteniendo datos...")
 
-
-sp_list_Tutorias = site.List('Tutorias')
-sp_list_Tutores = site.List('Tutores')
-sp_list_Aulas = site.List('Aulas')
-
-Tutoriasdata = sp_list_Tutorias.GetListItems(fields=['ID', 'Aula', 'Tipo de Tutoria', 'Contactado','Estado', 'Telefono', 'Nombre Tutor', 'Fecha de Tutoria', 'Hora Tutoria', 'Clases','Temas','Alumnos', 'TutoresRechazaron'])
-Tutoresdata = sp_list_Tutores.GetListItems(fields=['ID', 'Tutor', 'Telefono', 'TelefonoAuxiliar', 'Habilitado/Deshabilitado', 'Clases que Imparte', 'Horario Lunes', 'Horario Martes', 'Horario Miercoles', 'Horario Jueves', 'Horarios Viernes', 'Horario Sabado'])
+# Obtener datos usando autenticación interactiva
+Tutoriasdata = auth.get_list_items('Tutorias', ['ID', 'Aula', 'Tipo de Tutoria', 'Contactado','Estado', 'Telefono', 'Nombre Tutor', 'Fecha de Tutoria', 'Hora Tutoria', 'Clases','Temas','Alumnos', 'TutoresRechazaron'])
+Tutoresdata = auth.get_list_items('Tutores', ['ID', 'Tutor', 'Telefono', 'TelefonoAuxiliar', 'Habilitado/Deshabilitado', 'Clases que Imparte', 'Horario Lunes', 'Horario Martes', 'Horario Miercoles', 'Horario Jueves', 'Horarios Viernes', 'Horario Sabado'])
 random.shuffle(Tutoresdata) # Mezclar lista de tutores
-Aulasdata = sp_list_Aulas.GetListItems(fields=['ID', 'IdAula ', 'Oficial'])
+Aulasdata = auth.get_list_items('Aulas', ['ID', 'IdAula ', 'Oficial'])
 
 
 
@@ -50,9 +52,8 @@ def obtenerClasesDesdeSharePoint():
     :return: Diccionario donde las claves son los nombres de las clases y los valores sus IDs.
     """
     try:
-        # Consulta-la lista de clases en SharePoint
-        sp_list_Clases = site.List('Clases')  # Asegúrate de que este sea el nombre correcto
-        clases_data = sp_list_Clases.GetListItems(fields=['ID', 'Nombre de Clase'])  # Ajusta 'NombreClase' según el campo real
+        # Usar autenticación interactiva para obtener datos
+        clases_data = auth.get_list_items('Clases', ['ID', 'Nombre de Clase'])
         # Crear un diccionario {NombreClase: ID}
         clases_dict = {clase['Nombre de Clase']: clase['ID'] for clase in clases_data}
         print("Clases obtenidas desde SharePoint:", clases_dict)
@@ -125,9 +126,8 @@ def obtenerHorariosDesdeSharePoint():
     :return: Diccionario donde las claves son los horarios y los valores sus IDs.
     """
     try:
-        # Consulta-la lista de horarios en SharePoint
-        sp_list_Horarios = site.List('Horarios Contenido')  # Asegúrate de que este sea el nombre correcto
-        horarios_data = sp_list_Horarios.GetListItems(fields=['ID', 'Horarios'])  # Ajusta 'Horario' según el campo real
+        # Usar autenticación interactiva para obtener datos
+        horarios_data = auth.get_list_items('Horarios Contenido', ['ID', 'Horarios'])
         # Crear un diccionario {Horario: ID}
         horarios_dict = {horario['Horarios']: horario['ID'] for horario in horarios_data}
         print("Horarios obtenidos desde SharePoint:", horarios_dict)

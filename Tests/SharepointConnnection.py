@@ -4,8 +4,12 @@ import time
 import pyautogui
 import keyboard as k
 
-from shareplum import Site
-from shareplum import Office365
+import os
+import sys
+
+# Add parent directory to path to import SharePointInteractiveAuth
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from Unidad_Accion.SharePointInteractiveAuth import SharePointInteractiveAuth
 
 
 class SharepointConnection:

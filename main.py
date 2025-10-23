@@ -5,9 +5,7 @@ import speech_recognition as sr
 import subprocess
 import keyboard
 from Unidad_Accion.Accion_NoInvasiva.Toasts import ToastifyWindows
-from shareplum import Site
-from shareplum import Office365
-from shareplum.site import Version
+from Unidad_Accion.SharePointInteractiveAuth import SharePointInteractiveAuth
 from APIs.autoGPT import AutoGPT  # Importamos la clase AutoGPT desde el archivo que contenga esta clase
 
 # Inicializamos Toastify, reconocimiento de voz y la clase AutoGPT
@@ -36,12 +34,24 @@ execution_lock = threading.Lock()  # Lock para controlar la ejecución simultán
 
 
 
+# Variable global para la autenticación de SharePoint
+sharepoint_auth = None
+
+# Función para inicializar la autenticación de SharePoint
+def inicializar_sharepoint():
+    global sharepoint_auth
+    if sharepoint_auth is None:
+        print("Inicializando autenticación interactiva con SharePoint...")
+        sharepoint_auth = SharePointInteractiveAuth()
+        if not sharepoint_auth.authenticate_interactive():
+            raise Exception("No se pudo autenticar con SharePoint")
+        print("Autenticación con SharePoint exitosa")
+    return sharepoint_auth
+
 # Función para obtener los datos de la lista de SharePoint
 def obtener_datos_lista():
-    authcookie = Office365('https://unitechn.sharepoint.com', username='', password='').GetCookies()
-    site = Site('https://unitechn.sharepoint.com/sites/TutoriasUNITEC2/', authcookie=authcookie)
-    lista = site.List('Tutorias')  # Nombre de la lista en SharePoint
-    return lista.GetListItems(fields=['ID', 'Aula', 'Tipo de Tutoria', 'Contactado','Estado', 'Telefono', 'Nombre Tutor', 'Fecha de Tutoria', 'Hora Tutoria', 'Clases','Temas','Alumnos', 'TutoresRechazaron'])
+    auth = inicializar_sharepoint()
+    return auth.get_list_items('Tutorias', ['ID', 'Aula', 'Tipo de Tutoria', 'Contactado','Estado', 'Telefono', 'Nombre Tutor', 'Fecha de Tutoria', 'Hora Tutoria', 'Clases','Temas','Alumnos', 'TutoresRechazaron'])
 
 # Monitorear cambios en la lista de SharePoint en un hilo separado
 def detectar_cambios():

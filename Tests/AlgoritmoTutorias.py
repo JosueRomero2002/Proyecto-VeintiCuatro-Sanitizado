@@ -3,25 +3,28 @@ from datetime import datetime, timedelta
 import time
 import pyautogui
 import keyboard as k
-from shareplum import Site
-from shareplum import Office365
 import random
 import difflib
+import os
+import sys
 
-# Autenticación en SharePoint
-authcookie = Office365('https://unitechn.sharepoint.com', username='', password='').GetCookies()
+# Add parent directory to path to import SharePointInteractiveAuth
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from Unidad_Accion.SharePointInteractiveAuth import SharePointInteractiveAuth
 
-site = Site('https://unitechn.sharepoint.com/sites/TutoriasUNITEC2/', authcookie=authcookie)
+# Autenticación interactiva con SharePoint
+print("Iniciando autenticación interactiva con SharePoint...")
+auth = SharePointInteractiveAuth()
+if not auth.authenticate_interactive():
+    raise Exception("No se pudo autenticar con SharePoint")
 
+print("Autenticación exitosa, obteniendo datos...")
 
-sp_list_Tutorias = site.List('Tutorias')
-sp_list_Tutores = site.List('Tutores')
-sp_list_Aulas = site.List('Aulas')
-
-Tutoriasdata = sp_list_Tutorias.GetListItems(fields=['ID', 'Aula', 'Tipo de Tutoria', 'Contactado','Estado', 'Telefono', 'Nombre Tutor', 'Fecha de Tutoria', 'Hora Tutoria', 'Clases','Temas','Alumnos', 'TutoresRechazaron'])
-Tutoresdata = sp_list_Tutores.GetListItems(fields=['ID', 'Tutor', 'Telefono', 'TelefonoAuxiliar', 'Habilitado/Deshabilitado', 'Clases que Imparte', 'Horario Lunes', 'Horario Martes', 'Horario Miercoles', 'Horario Jueves', 'Horarios Viernes', 'Horario Sabado'])
+# Obtener datos usando autenticación interactiva
+Tutoriasdata = auth.get_list_items('Tutorias', ['ID', 'Aula', 'Tipo de Tutoria', 'Contactado','Estado', 'Telefono', 'Nombre Tutor', 'Fecha de Tutoria', 'Hora Tutoria', 'Clases','Temas','Alumnos', 'TutoresRechazaron'])
+Tutoresdata = auth.get_list_items('Tutores', ['ID', 'Tutor', 'Telefono', 'TelefonoAuxiliar', 'Habilitado/Deshabilitado', 'Clases que Imparte', 'Horario Lunes', 'Horario Martes', 'Horario Miercoles', 'Horario Jueves', 'Horarios Viernes', 'Horario Sabado'])
 random.shuffle(Tutoresdata) # Mezclar lista de tutores
-Aulasdata = sp_list_Aulas.GetListItems(fields=['ID', 'IdAula ', 'Oficial'])
+Aulasdata = auth.get_list_items('Aulas', ['ID', 'IdAula ', 'Oficial'])
 
 # print(Aulasdata)
 # print(Tutoresdata)

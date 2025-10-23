@@ -9,9 +9,7 @@ from pydub.playback import play
 from tempfile import NamedTemporaryFile
 from Unidad_Accion.Accion_NoInvasiva.Toasts import ToastifyWindows
 
-from shareplum import Site
-from shareplum import Office365
-from shareplum.site import Version
+from Unidad_Accion.SharePointInteractiveAuth import SharePointInteractiveAuth
 from APIs.autoGPT import AutoGPT
 
 # Inicialización de APIs y utilidades

@@ -4,17 +4,25 @@ import time
 import pyautogui
 import keyboard as k
 
-from shareplum import Site
-from shareplum import Office365
+import os
+import sys
 
-authcookie = Office365('https://unitechn.sharepoint.com', username='', password='').GetCookies()
-site = Site('https://unitechn.sharepoint.com/sites/TutoriasUNITEC2/', authcookie=authcookie)
-sp_list_Tutorias = site.List('Tutorias')
-sp_list_Tutores = site.List('Tutores')
-sp_list_Aulas = site.List('Aulas')
-Tutoriasdata = sp_list_Tutorias.GetListItems(fields=['ID', "Aula", 'Tipo de Tutoria', 'Contactado','Estado', 'Telefono', 'Nombre Tutor', 'Tipo de Tutoria', 'Fecha de Tutoria', 'Hora Tutoria', 'Clases','Temas','Alumnos', 'Aula', 'Numero de Cuenta'])
-Tutoresdata = sp_list_Tutores.GetListItems(fields=['ID', 'Tutor', 'Telefono', 'TelefonoAuxiliar','Número de Cuenta' ])
-Aulasdata = sp_list_Aulas.GetListItems(fields=['ID', 'IdAula ', 'Oficial'])
+# Add parent directory to path to import SharePointInteractiveAuth
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from Unidad_Accion.SharePointInteractiveAuth import SharePointInteractiveAuth
+
+# Autenticación interactiva con SharePoint
+print("Iniciando autenticación interactiva con SharePoint...")
+auth = SharePointInteractiveAuth()
+if not auth.authenticate_interactive():
+    raise Exception("No se pudo autenticar con SharePoint")
+
+print("Autenticación exitosa, obteniendo datos...")
+
+# Obtener datos usando autenticación interactiva
+Tutoriasdata = auth.get_list_items('Tutorias', ['ID', "Aula", 'Tipo de Tutoria', 'Contactado','Estado', 'Telefono', 'Nombre Tutor', 'Tipo de Tutoria', 'Fecha de Tutoria', 'Hora Tutoria', 'Clases','Temas','Alumnos', 'Aula', 'Numero de Cuenta'])
+Tutoresdata = auth.get_list_items('Tutores', ['ID', 'Tutor', 'Telefono', 'TelefonoAuxiliar','Número de Cuenta' ])
+Aulasdata = auth.get_list_items('Aulas', ['ID', 'IdAula ', 'Oficial'])
 
 import locale
 

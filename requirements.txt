@@ -1,0 +1,16 @@
+# SharePoint Interactive Authentication Dependencies
+msal>=1.24.0
+requests>=2.31.0
+
+# Existing project dependencies
+shareplum>=0.5.1
+pywhatkit>=5.4
+pyautogui>=0.9.54
+keyboard>=0.13.5
+speech_recognition>=3.10.0
+openai>=1.0.0
+pydub>=0.25.1
+python-dotenv>=1.0.0
+
+# Optional: For NTLM fallback authentication
+requests-ntlm>=1.2.0
